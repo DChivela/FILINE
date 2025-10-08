@@ -68,5 +68,5 @@ Uma vez que a hierarquia é **VERMELHO** > **LARANJA** > **AMARELO** > **VERDE**
 
 **AZUL** — rotina / sem urgência
 
-Importante: a avaliação pode combinar fatores (idade, comorbidades); é importante registar os motivos que determinam a categoria.
+_Importante:_ a avaliação pode combinar fatores (idade, comorbidades); é importante registar os motivos que determinam a categoria.
 

@@ -1,6 +1,10 @@
 <?php
 // index.php
 require_once __DIR__ . '/src/config.php';
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 $stmt = $pdo->query("SELECT Cod_Tipo_Sangue, Tipo_Sangue FROM tb_Tipo_Sangue ORDER BY Tipo_Sangue");
 $tipos = $stmt->fetchAll();
 $stmt = $pdo->query("SELECT Cod_Alergia, Tipo_Alergia FROM Tb_Alergia ORDER BY Tipo_Alergia");
@@ -8,12 +12,17 @@ $alergias = $stmt->fetchAll();
 $stmt = $pdo->query("SELECT id, morada, rua FROM enderecos ORDER BY morada");
 $enderecos = $stmt->fetchAll();
 ?>
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pt">
 
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <!-- <meta property="og:image" content="https://link_do_site_/img/logo.jpg"> -->
+  <meta name="title" content="WAF REPORT 2025">
+  <meta name="description" content="Sistema de Gestão de Intervenções">
+  <meta name="keywords" content="Intervenções, Gestão, Clientes, Técnicos, Tickets">
+  <meta name="author" content="WAF Center - Domingos Chivela">
   <title>Pré-Triagem</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
@@ -25,7 +34,7 @@ $enderecos = $stmt->fetchAll();
     }
 
     .hero {
-      height: 50vh;
+      height: 85vh;
       background-image: url('public/img/emergency.jpg');
       /* ajusta aqui */
       background-size: cover;
@@ -81,7 +90,7 @@ $enderecos = $stmt->fetchAll();
   <div class="hero">
     <div class="card p-3">
       <h2 class="text-center"><i class="fa fa-book" aria-hidden="true"></i> Filine - Serviços de Facilitação à Pré-Triagem</h2>
-      <p class="mb-0">Escolha o grupo de ocorrência e marque os sinais relevantes. Os nossos profissionais tratarão do resto enquanto aguarda.</p>
+      <p class="mb-0">Seleccione a ocorrência e marque os sinais relevantes. Os nossos profissionais tratarão do resto enquanto aguarda.</p>
     </div>
   </div>
 
@@ -113,7 +122,7 @@ $enderecos = $stmt->fetchAll();
             </div>
             <div class="form-group col-md-6">
               <label>Data de Nascimento</label>
-              <input name="Data_Nascimento" type="date" class="form-control" />
+              <input name="Data_Nascimento" type="date" class="form-control" required/>
             </div>
           </div>
           <div class="form-row">
@@ -121,8 +130,8 @@ $enderecos = $stmt->fetchAll();
               <label>Endereço (Morada)</label>
               <select name="id_endereco" class="form-control">
                 <option value="">Seleccione um Bairro</option>
-                <?php foreach ($enderecos as $e): ?>
-                  <option value="<?= htmlspecialchars($e['morada']) ?>"><?= htmlspecialchars($e['morada']) ?></option>
+                <?php foreach ($enderecos as $en): ?>
+                  <option value="<?= htmlspecialchars($en['morada']) ?>"><?= htmlspecialchars($en['morada']) ?></option>
                 <?php endforeach; ?>
               </select>
             </div>
@@ -605,7 +614,9 @@ $enderecos = $stmt->fetchAll();
     </form>
   </div>
 
-  <footer>© 2024 Filine-ON. Todos os direitos reservados.</footer>
+  <footer>
+    <p>&copy; <?= date('Y') ?> Filine-ON. Todos os direitos reservados.</p>
+  </footer>
 
   <script>
     // Show/hide sections
