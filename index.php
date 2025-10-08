@@ -96,12 +96,12 @@ $enderecos = $stmt->fetchAll();
               <input name="Nome_Paciente" class="form-control" required />
             </div>
             <div class="form-group col-md-6">
-              <label>Gênero</label>
-              <select name="Tipo_Sangue" class="form-control">
-                <option value="">--</option>
-                <?php foreach ($tipos as $t): ?>
-                  <option value="<?= htmlspecialchars($t['Cod_Tipo_Sangue']) ?>"><?= htmlspecialchars($t['Tipo_Sangue']) ?></option>
-                <?php endforeach; ?>
+              <label>Género do Paciente</label>
+              <select name="Genero_Paciente" class="form-control">
+                <option value="" required>Selecione</option>
+                <option>Masculino</option>
+                <option>Feminino</option>
+                <option>Outro</option>
               </select>
             </div>
           </div>
@@ -116,20 +116,21 @@ $enderecos = $stmt->fetchAll();
               <input name="Data_Nascimento" type="date" class="form-control" />
             </div>
           </div>
+          <div class="form-row">
+            <div class="form-group form-group col-md-6">
+              <label>Endereço (Morada)</label>
+              <select name="id_endereco" class="form-control">
+                <option value="">Seleccione um Bairro</option>
+                <?php foreach ($enderecos as $e): ?>
+                  <option value="<?= htmlspecialchars($e['morada']) ?>"><?= htmlspecialchars($e['morada']) ?></option>
+                <?php endforeach; ?>
+              </select>
+            </div>
 
-          <div class="form-group">
-            <label>Endereço (Morada)</label>
-            <select name="id_endereco" class="form-control">
-              <option value="">Seleccione um Bairro</option>
-              <?php foreach ($enderecos as $e): ?>
-                <option value="<?= htmlspecialchars($e['morada']) ?>"><?= htmlspecialchars($e['morada']) ?></option>
-              <?php endforeach; ?>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label>Endereço (Morada)</label>
-            <input name="Endereco" class="form-control" />
+            <div class="form-group form-group col-md-6">
+              <label>Endereço (Morada)</label>
+              <input name="Endereco" class="form-control" placeholder="Se o bairro não estiver na lista (Opcional)"/>
+            </div>
           </div>
 
           <div class="form-row">
