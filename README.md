@@ -70,3 +70,21 @@ Uma vez que a hierarquia é **VERMELHO** > **LARANJA** > **AMARELO** > **VERDE**
 
 _Importante:_ a avaliação pode combinar fatores (idade, comorbidades); é importante registar os motivos que determinam a categoria.
 
+## Melhores práticas e UX(User Experience)
+
+- Sempre valida no servidor — o JS é só para UX. A decisão final é feita no servidor.
+
+- Campos específicos para sintomas em vez de um único Tipo_Ocorrencia textual — facilita regras. Usou-se checkboxes / radios para sinais críticos.
+
+- Regista motivos (motivos_classificacao) para auditoria, treinamentos e revisão clínica.
+
+- Permite override manual por um profissional (ex.: enfermeiro pode ajustar classificação se discordar).
+
+- Logs e timestamps — regista quando foi classificado e por quem.
+
+- Notificações / filas — quando VERMELHO ou LARANJA, gera um alerta em tempo real (socket/websocket) ou ecrã de "triagem urgente".
+
+- Segurança: usa prepared statements (mostrei prepare/execute). Sanitiza dados(limpa ou trata dados de entrada) antes de mostrar.
+
+- Acessibilidade: bom contraste, labels, e capacidade de usar teclado.
+
