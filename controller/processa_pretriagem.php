@@ -332,15 +332,15 @@ $post['Classificacao_de_Risco'] = $classificacao_calculada;
 
 // Prepara SQL (inclui Grupo_Ocorrencia e Motivos_Classificacao).
 $sql_with_motivos = "INSERT INTO Tb_Pre_Triagem
-(Nome_Paciente, Nome_Encarregado, Genero_Paciente, Data_Nascimento, Contacto, Endereco,
+(Nome_Paciente, Nome_Encarregado, Genero_Paciente, Data_Nascimento, Contacto, Endereco, :id_endereco,
  Tipo_Ocorrencia, Sintoma_Principal, Grupo_Ocorrencia, Classificacao_de_Risco, Motivos_Classificacao, Data_de_Registo, Tipo_Sangue, Alergia, Situacao, Senha_de_Atendimento)
- VALUES (:Nome_Paciente, :Nome_Encarregado, :Genero_Paciente, :Data_Nascimento, :Contacto, :Endereco,
+ VALUES (:Nome_Paciente, :Nome_Encarregado, :Genero_Paciente, :Data_Nascimento, :Contacto, :Endereco, :id_endereco,
  :Tipo_Ocorrencia, :Sintoma_Principal, :Grupo_Ocorrencia, :Classificacao_de_Risco, :Motivos_Classificacao, :Data_de_Registo, :Tipo_Sangue, :Alergia, :Situacao, :Senha_de_Atendimento)";
 
 $sql_without_motivos = "INSERT INTO Tb_Pre_Triagem
-(Nome_Paciente, Nome_Encarregado, Genero_Paciente, Data_Nascimento, Contacto, Endereco,
+(Nome_Paciente, Nome_Encarregado, Genero_Paciente, Data_Nascimento, Contacto, Endereco, :id_endereco,
  Tipo_Ocorrencia, Sintoma_Principal, Grupo_Ocorrencia, Classificacao_de_Risco, Data_de_Registo, Tipo_Sangue, Alergia, Situacao, Senha_de_Atendimento)
- VALUES (:Nome_Paciente, :Nome_Encarregado, :Genero_Paciente, :Data_Nascimento, :Contacto, :Endereco,
+ VALUES (:Nome_Paciente, :Nome_Encarregado, :Genero_Paciente, :Data_Nascimento, :Contacto, :Endereco, :id_endereco,
  :Tipo_Ocorrencia, :Sintoma_Principal, :Grupo_Ocorrencia, :Classificacao_de_Risco, :Data_de_Registo, :Tipo_Sangue, :Alergia, :Situacao, :Senha_de_Atendimento)";
 
 $params_common = [
@@ -350,6 +350,7 @@ $params_common = [
     ':Data_Nascimento' => $post['Data_Nascimento'] ?: null,
     ':Contacto' => $post['Contacto'] ?? null,
     ':Endereco' => $post['Endereco'] ?? null,
+    ':id_endereco' => $post['id_endereco'] ?? null,
     ':Tipo_Ocorrencia' => $post['Tipo_Ocorrencia'] ?? null,
     ':Sintoma_Principal' => $post['Sintoma_Principal'] ?? null,
     ':Grupo_Ocorrencia' => $grupo,

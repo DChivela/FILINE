@@ -5,6 +5,8 @@ $stmt = $pdo->query("SELECT Cod_Tipo_Sangue, Tipo_Sangue FROM tb_Tipo_Sangue ORD
 $tipos = $stmt->fetchAll();
 $stmt = $pdo->query("SELECT Cod_Alergia, Tipo_Alergia FROM Tb_Alergia ORDER BY Tipo_Alergia");
 $alergias = $stmt->fetchAll();
+$stmt = $pdo->query("SELECT id, morada, rua FROM enderecos ORDER BY morada");
+$enderecos = $stmt->fetchAll();
 ?>
 <!doctype html>
 <html lang="pt">
@@ -88,9 +90,20 @@ $alergias = $stmt->fetchAll();
       <div class="row">
         <div class="col-md-6">
           <!-- Dados do paciente -->
-          <div class="form-group">
-            <label class="required">Nome do Paciente</label>
-            <input name="Nome_Paciente" class="form-control" required />
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label class="required">Nome do Paciente</label>
+              <input name="Nome_Paciente" class="form-control" required />
+            </div>
+            <div class="form-group col-md-6">
+              <label>Gênero</label>
+              <select name="Tipo_Sangue" class="form-control">
+                <option value="">--</option>
+                <?php foreach ($tipos as $t): ?>
+                  <option value="<?= htmlspecialchars($t['Cod_Tipo_Sangue']) ?>"><?= htmlspecialchars($t['Tipo_Sangue']) ?></option>
+                <?php endforeach; ?>
+              </select>
+            </div>
           </div>
 
           <div class="form-row">
@@ -102,6 +115,16 @@ $alergias = $stmt->fetchAll();
               <label>Data de Nascimento</label>
               <input name="Data_Nascimento" type="date" class="form-control" />
             </div>
+          </div>
+
+          <div class="form-group">
+            <label>Endereço (Morada)</label>
+            <select name="id_endereco" class="form-control">
+              <option value="">Seleccione um Bairro</option>
+              <?php foreach ($enderecos as $e): ?>
+                <option value="<?= htmlspecialchars($e['morada']) ?>"><?= htmlspecialchars($e['morada']) ?></option>
+              <?php endforeach; ?>
+            </select>
           </div>
 
           <div class="form-group">
@@ -140,7 +163,7 @@ $alergias = $stmt->fetchAll();
         <div class="col-md-6">
           <!-- Grupo de ocorrência -->
           <div class="form-group">
-            <label class="required">Grupo de Ocorrência</label>
+            <label class="required">Ocorrências</label>
             <select name="Grupo_Ocorrencia" id="Grupo_Ocorrencia" class="form-control" required title="Apenas é permitida uma opção por pré-triagem">
               <option value="">-- Seleccione --</option>
               <option value="AGRESSAO">AGRESSÃO</option>
