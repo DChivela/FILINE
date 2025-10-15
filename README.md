@@ -57,6 +57,11 @@ As funções em `JavaScript` são as que estão ligadas as **Ocorrências**.
 - Separação clara entre lógica de busca, exibição e interação
 - Compatível com navegadores modernos sem dependência de bibliotecas externas
 
+### Observações
+- Os valores dos IDs das seções devem seguir o padrão `sec_<nome_do_grupo_em_minúsculas>`.
+- Os valores dos `<option>` devem estar em MAIÚSCULAS e corresponder ao nome do grupo.
+- Os labels dos sintomas devem ser únicos dentro de cada grupo para evitar conflitos.
+
 ## Como decidir a classificação (condicionais)
 ### Regras / Condicionais (tradução do fluxograma)
 Uma vez que a hierarquia é **VERMELHO** > **LARANJA** > **AMARELO** > **VERDE** > **AZUL**. Avaliar sempre do mais grave para o menos.
