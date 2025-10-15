@@ -25,6 +25,7 @@ $enderecos = $stmt->fetchAll();
   <meta name="author" content="Filine - Estefânio Da Silva & Domingos Chivela">
   <title>Pré-Triagem</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
   <link rel="icon" href="public/favicon.ico" type="image/x-icon">
   <link rel="stylesheet" href="../public/css/styles.css">
@@ -91,6 +92,7 @@ $enderecos = $stmt->fetchAll();
     <div class="card p-3">
       <h2 class="text-center"><i class="fa fa-book" aria-hidden="true"></i> Filine - Serviços de Facilitação à Pré-Triagem</h2>
       <p class="mb-0">Seleccione a ocorrência e marque os sinais relevantes. Os nossos profissionais tratarão do resto enquanto aguarda.</p>
+      <p class="mb-0">Não é feita ou passada nenhuma prescrição médica neste sistema. Sendo assim, deve dirigir-se a um centro médico para o mesmo.</p>
     </div>
   </div>
 
@@ -101,11 +103,11 @@ $enderecos = $stmt->fetchAll();
           <!-- Dados do paciente -->
           <div class="form-row">
             <div class="form-group col-md-6">
-              <label class="required">Nome do Paciente</label>
+              <label class="required"><i class="bi bi-alphabet-uppercase"></i> Nome do Paciente</label>
               <input name="Nome_Paciente" class="form-control" required />
             </div>
             <div class="form-group col-md-6">
-              <label>Género do Paciente</label>
+              <label><i class="bi bi-gender-ambiguous"></i> Género do Paciente</label>
               <select name="Genero_Paciente" class="form-control">
                 <option value="" required>Selecione</option>
                 <option>Masculino</option>
@@ -117,17 +119,17 @@ $enderecos = $stmt->fetchAll();
 
           <div class="form-row">
             <div class="form-group col-md-6">
-              <label class="required">Contacto Telefónico</label>
+              <label class="required"><i class="bi bi-telephone-inbound"></i> Contacto Telefónico</label>
               <input name="Contacto" class="form-control" required />
             </div>
             <div class="form-group col-md-6">
-              <label>Data de Nascimento</label>
+              <label><i class="bi bi-calendar2-date"></i> Data de Nascimento</label>
               <input name="Data_Nascimento" type="date" class="form-control" required />
             </div>
           </div>
           <div class="form-row">
             <div class="form-group form-group col-12">
-              <label>Endereço (Morada)</label>
+              <label><i class="bi bi-signpost-2"></i> Endereço (Morada)</label>
               <select name="id_endereco" class="form-control">
                 <option value="">Seleccione um Bairro</option>
                 <?php foreach ($enderecos as $en): ?>
@@ -144,7 +146,7 @@ $enderecos = $stmt->fetchAll();
 
           <div class="form-row">
             <div class="form-group col-md-6">
-              <label>Tipo de Sangue</label>
+              <label><i class="bi bi-medium"></i> Tipo de Sangue</label>
               <select name="Tipo_Sangue" class="form-control">
                 <option value="">--</option>
                 <?php foreach ($tipos as $t): ?>
@@ -153,7 +155,7 @@ $enderecos = $stmt->fetchAll();
               </select>
             </div>
             <div class="form-group col-md-6">
-              <label>Alergia</label>
+              <label><i class="bi bi-capsule"></i> Alergia</label>
               <select name="Alergia" class="form-control">
                 <option value="">Nenhuma</option>
                 <?php foreach ($alergias as $a): ?>
@@ -173,10 +175,11 @@ $enderecos = $stmt->fetchAll();
         <div class="col-md-6">
           <!-- Grupo de ocorrência -->
           <div class="form-group">
-            <label class="required">Ocorrências</label>
+            <label class="required"><i class="bi bi-clipboard2-pulse-fill"></i> Ocorrências</label>
             <div class="form-group">
-              <label for="search_ocorrencia">Pesquisar ocorrência</label>
-              <input type="text" id="search_ocorrencia" class="form-control" placeholder="Digite para filtrar...">
+              <label for="search_ocorrencia"><i class="bi bi-search"></i> Pesquisar ocorrência ou sinal</label>
+              <input type="text" id="search_ocorrencia" class="form-control" placeholder="Digite sintomas, sinais ou grupo...">
+              <button type="button" id="clear_filter" class="btn btn-secondary mt-2"><i class="bi bi-trash3"></i> Limpar filtro</button>
             </div>
             <select name="Grupo_Ocorrencia" id="Grupo_Ocorrencia" class="form-control" required title="Apenas é permitida uma opção por pré-triagem">
               <option value="">-- Seleccione --</option>
@@ -613,7 +616,7 @@ $enderecos = $stmt->fetchAll();
       <input type="hidden" name="motivos_classificacao" id="motivos_classificacao" value="" />
 
       <div class="text-right mt-3">
-        <button type="submit" class="btn btn-primary">Registar Pré-Triagem</button>
+        <button type="submit" class="btn btn-primary"><i class="bi bi-floppy"></i> Registar Pré-Triagem</button>
       </div>
     </form>
   </div>
