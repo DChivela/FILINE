@@ -1,7 +1,7 @@
 <?php
 // public/store_pretriagem.php
 require_once __DIR__ . '/../src/config.php';
-require_once __DIR__ . '/../src/functions.php';
+require_once __DIR__ . '/../src/validate.php';
 
 // Pega post cru
 $post = filter_input_array(INPUT_POST, FILTER_UNSAFE_RAW);
