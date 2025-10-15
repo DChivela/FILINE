@@ -22,7 +22,7 @@ $enderecos = $stmt->fetchAll();
   <meta name="title" content="FILINE 2025">
   <meta name="description" content="Sistema de Gestão Filas de Espera em Instituições de Saúde">
   <meta name="keywords" content="Gestão, Pacientes, Filas, Espera">
-  <meta name="author" content="Filine - Domingos Chivela">
+  <meta name="author" content="Filine - Estefânio Da Silva & Domingos Chivela">
   <title>Pré-Triagem</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
@@ -122,7 +122,7 @@ $enderecos = $stmt->fetchAll();
             </div>
             <div class="form-group col-md-6">
               <label>Data de Nascimento</label>
-              <input name="Data_Nascimento" type="date" class="form-control" required/>
+              <input name="Data_Nascimento" type="date" class="form-control" required />
             </div>
           </div>
           <div class="form-row">
@@ -131,14 +131,14 @@ $enderecos = $stmt->fetchAll();
               <select name="id_endereco" class="form-control">
                 <option value="">Seleccione um Bairro</option>
                 <?php foreach ($enderecos as $en): ?>
-                  <option value="<?= htmlspecialchars($en['morada'] . ' - ' . $en['rua'])?>"><?= htmlspecialchars($en['morada'] . ' - ' . $en['rua']) ?></option>
+                  <option value="<?= htmlspecialchars($en['morada'] . ' - ' . $en['rua']) ?>"><?= htmlspecialchars($en['morada'] . ' - ' . $en['rua']) ?></option>
                 <?php endforeach; ?>
               </select>
             </div>
 
             <div class="form-group form-group col-md-6" hidden>
               <label>Endereço (Morada)</label>
-              <input name="Endereco" class="form-control" placeholder="Se o bairro não estiver na lista (Opcional)"/>
+              <input name="Endereco" class="form-control" placeholder="Se o bairro não estiver na lista (Opcional)" />
             </div>
           </div>
 
@@ -174,6 +174,10 @@ $enderecos = $stmt->fetchAll();
           <!-- Grupo de ocorrência -->
           <div class="form-group">
             <label class="required">Ocorrências</label>
+            <div class="form-group">
+              <label for="search_ocorrencia">Pesquisar ocorrência</label>
+              <input type="text" id="search_ocorrencia" class="form-control" placeholder="Digite para filtrar...">
+            </div>
             <select name="Grupo_Ocorrencia" id="Grupo_Ocorrencia" class="form-control" required title="Apenas é permitida uma opção por pré-triagem">
               <option value="">-- Seleccione --</option>
               <option value="AGRESSAO">AGRESSÃO</option>
@@ -617,7 +621,7 @@ $enderecos = $stmt->fetchAll();
   <footer>
     <p>&copy; <?= date('Y') ?> Filine-ON. Todos os direitos reservados.</p>
   </footer>
-
+  <script src="src/filter_ocorrencias.js"></script>
   <script>
     // Show/hide sections
     const sel = document.getElementById('Grupo_Ocorrencia');
