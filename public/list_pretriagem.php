@@ -47,13 +47,14 @@ $countFilteredStmt->execute($params);
 $totalFiltered = (int) $countFilteredStmt->fetchColumn();
 $totalPages = max(1, (int) ceil($totalFiltered / $perPage));
 
-// query principal com ordenação por prioridade e por Data_de_Registo asc (mais antigo primeiro)
+// query principal com ordenação por prioridade e por Data_de_Registo asc (mais antigo em primeiro)
 $sql = "SELECT p.Cod_Pre_Triagem, p.Nome_Paciente, p.Senha_de_Atendimento, p.Sintoma_Principal, p.Data_de_Registo,
                p.Classificacao_de_Risco, p.Grupo_Ocorrencia, p.Motivos_Classificacao,
-               t.Tipo_Sangue, a.Tipo_Alergia
+               t.Tipo_Sangue, a.Tipo_Alergia, e.morada
         FROM Tb_Pre_Triagem p
         LEFT JOIN tb_Tipo_Sangue t ON t.Cod_Tipo_Sangue = p.Tipo_Sangue
         LEFT JOIN Tb_Alergia a ON a.Cod_Alergia = p.Alergia
+        LEFT JOIN enderecos e ON e.id = p.id_endereco
         $whereSql
         ORDER BY
           CASE
@@ -276,6 +277,7 @@ function tempo_humano($datetime_str)
             <th>Data de Registo</th>
             <th>Sangue</th>
             <th>Alergia</th>
+            <th>Morada</th>
           </tr>
         </thead>
         <tbody id="listaCorpo">
@@ -298,6 +300,7 @@ function tempo_humano($datetime_str)
               <td><?= htmlspecialchars($r['Data_de_Registo']) ?></td>
               <td><?= htmlspecialchars($r['Tipo_Sangue']) ?></td>
               <td><?= htmlspecialchars($r['Tipo_Alergia']) ?></td>
+              <td><?= htmlspecialchars($r['morada']) ?></td>
             </tr>
           <?php endforeach; ?>
           <?php if (empty($rows)): ?>

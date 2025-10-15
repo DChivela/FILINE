@@ -19,10 +19,10 @@ $enderecos = $stmt->fetchAll();
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <!-- <meta property="og:image" content="https://link_do_site_/img/logo.jpg"> -->
-  <meta name="title" content="WAF REPORT 2025">
-  <meta name="description" content="Sistema de Gestão de Intervenções">
-  <meta name="keywords" content="Intervenções, Gestão, Clientes, Técnicos, Tickets">
-  <meta name="author" content="WAF Center - Domingos Chivela">
+  <meta name="title" content="FILINE 2025">
+  <meta name="description" content="Sistema de Gestão Filas de Espera em Instituições de Saúde">
+  <meta name="keywords" content="Gestão, Pacientes, Filas, Espera">
+  <meta name="author" content="Filine - Domingos Chivela">
   <title>Pré-Triagem</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">

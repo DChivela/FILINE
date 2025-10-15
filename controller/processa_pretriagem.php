@@ -2,9 +2,6 @@
 // public/store_pretriagem.php
 require_once __DIR__ . '/../src/config.php';
 require_once __DIR__ . '/../src/functions.php';
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
 
 // Pega post cru
 $post = filter_input_array(INPUT_POST, FILTER_UNSAFE_RAW);
@@ -333,19 +330,20 @@ $motivos_classificacao = implode(',', $decisao['motivos']);
 // Prioriza a classificação do servidor sempre
 $post['Classificacao_de_Risco'] = $classificacao_calculada;
 
-// Prepara SQL (inclui Grupo_Ocorrencia e Motivos_Classificacao).
+// PREPARA SQL (usar nome de coluna 'id_endereco' na lista de colunas)
 $sql_with_motivos = "INSERT INTO Tb_Pre_Triagem
-(Nome_Paciente, Nome_Encarregado, Genero_Paciente, Data_Nascimento, Contacto, Endereco, :id_endereco,
+(Nome_Paciente, Nome_Encarregado, Genero_Paciente, Data_Nascimento, Contacto, Endereco, id_endereco,
  Tipo_Ocorrencia, Sintoma_Principal, Grupo_Ocorrencia, Classificacao_de_Risco, Motivos_Classificacao, Data_de_Registo, Tipo_Sangue, Alergia, Situacao, Senha_de_Atendimento)
  VALUES (:Nome_Paciente, :Nome_Encarregado, :Genero_Paciente, :Data_Nascimento, :Contacto, :Endereco, :id_endereco,
  :Tipo_Ocorrencia, :Sintoma_Principal, :Grupo_Ocorrencia, :Classificacao_de_Risco, :Motivos_Classificacao, :Data_de_Registo, :Tipo_Sangue, :Alergia, :Situacao, :Senha_de_Atendimento)";
 
 $sql_without_motivos = "INSERT INTO Tb_Pre_Triagem
-(Nome_Paciente, Nome_Encarregado, Genero_Paciente, Data_Nascimento, Contacto, Endereco, :id_endereco,
+(Nome_Paciente, Nome_Encarregado, Genero_Paciente, Data_Nascimento, Contacto, Endereco, id_endereco,
  Tipo_Ocorrencia, Sintoma_Principal, Grupo_Ocorrencia, Classificacao_de_Risco, Data_de_Registo, Tipo_Sangue, Alergia, Situacao, Senha_de_Atendimento)
  VALUES (:Nome_Paciente, :Nome_Encarregado, :Genero_Paciente, :Data_Nascimento, :Contacto, :Endereco, :id_endereco,
  :Tipo_Ocorrencia, :Sintoma_Principal, :Grupo_Ocorrencia, :Classificacao_de_Risco, :Data_de_Registo, :Tipo_Sangue, :Alergia, :Situacao, :Senha_de_Atendimento)";
 
+// Atenção: usa ?? para evitar warnings se a chave não existir
 $params_common = [
     ':Nome_Paciente' => $post['Nome_Paciente'] ?? null,
     ':Nome_Encarregado' => $post['Nome_Encarregado'] ?? null,
@@ -353,12 +351,12 @@ $params_common = [
     ':Data_Nascimento' => $post['Data_Nascimento'] ?? null,
     ':Contacto' => $post['Contacto'] ?? null,
     ':Endereco' => $post['Endereco'] ?? null,
-    ':id_endereco' => $post['id_endereco'] ?? null,
+    ':id_endereco' => isset($post['id_endereco']) ? $post['id_endereco'] : null,
     ':Tipo_Ocorrencia' => $post['Tipo_Ocorrencia'] ?? null,
     ':Sintoma_Principal' => $post['Sintoma_Principal'] ?? null,
     ':Grupo_Ocorrencia' => $grupo,
     ':Classificacao_de_Risco' => $post['Classificacao_de_Risco'] ?? $classificacao_calculada,
-    ':Data_de_Registo' => $post['Data_de_Registo'] ?? date('Y-m-d H:i:s'),
+    ':Data_de_Registo' => ($post['Data_de_Registo'] ?? '') !== '' ? $post['Data_de_Registo'] : date('Y-m-d H:i:s'),
     ':Tipo_Sangue' => $post['Tipo_Sangue'] ?? null,
     ':Alergia' => $post['Alergia'] ?? null,
     ':Situacao' => $post['Situacao'] ?? null,
@@ -375,8 +373,9 @@ try {
     header('Location: ../public/list_pretriagem.php?msg=ok&senha=' . urlencode($senha) . '&class=' . urlencode($post['Classificacao_de_Risco']));
     exit;
 } catch (PDOException $e) {
+    // log detalhado para dev
     error_log('Insert com motivos falhou: ' . $e->getMessage());
-    // se falha por coluna inexistente, tenta sem motivos
+    // tenta sem motivos
     try {
         $stmt = $pdo->prepare($sql_without_motivos);
         $stmt->execute($params_common);
@@ -384,7 +383,9 @@ try {
         exit;
     } catch (PDOException $e2) {
         error_log('Insert sem motivos falhou: ' . $e2->getMessage());
-        echo "Erro ao gravar. Tente novamente.";
+        // detalhe para depuração em desenvolvimento (remover/ocultar em produção)
+        echo "Erro ao gravar. Tente novamente.<br><pre>" . htmlspecialchars($e2->getMessage()) . "</pre>";
         exit;
     }
 }
+
