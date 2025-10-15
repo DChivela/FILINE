@@ -158,12 +158,14 @@ function tempo_humano($datetime_str)
 
       <div class="col-md-4">
         <div class="box">
-          <h6>Operações</h6>
-          <p>
-            <a href="edit_pretriagem.php?id=<?= (int)$r['Cod_Pre_Triagem'] ?>" class="btn btn-sm btn-primary mb-2">Editar (se existir)</a>
-            <a href="delete_pretriagem.php?id=<?= (int)$r['Cod_Pre_Triagem'] ?>" class="btn btn-sm btn-danger mb-2" onclick="return confirm('Tem a certeza que deseja eliminar?')">Eliminar</a>
-          </p>
-          <hr>
+          <div hidden>
+            <h6>Operações</h6>
+            <p>
+              <a href="edit_pretriagem.php?id=<?= (int)$r['Cod_Pre_Triagem'] ?>" class="btn btn-sm btn-primary mb-2">Editar (se existir)</a>
+              <a href="delete_pretriagem.php?id=<?= (int)$r['Cod_Pre_Triagem'] ?>" class="btn btn-sm btn-danger mb-2" onclick="return confirm('Tem a certeza que deseja eliminar?')">Eliminar</a>
+            </p>
+            <hr>
+          </div>
           <h6>Registo</h6>
           <p class="muted">ID: <?= (int)$r['Cod_Pre_Triagem'] ?></p>
           <p class="muted">Senha: <?= esc($r['Senha_de_Atendimento']) ?></p>

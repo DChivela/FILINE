@@ -126,17 +126,17 @@ $enderecos = $stmt->fetchAll();
             </div>
           </div>
           <div class="form-row">
-            <div class="form-group form-group col-md-6">
+            <div class="form-group form-group col-12">
               <label>Endereço (Morada)</label>
               <select name="id_endereco" class="form-control">
                 <option value="">Seleccione um Bairro</option>
                 <?php foreach ($enderecos as $en): ?>
-                  <option value="<?= htmlspecialchars($en['morada']) ?>"><?= htmlspecialchars($en['morada']) ?></option>
+                  <option value="<?= htmlspecialchars($en['morada'] . ' - ' . $en['rua'])?>"><?= htmlspecialchars($en['morada'] . ' - ' . $en['rua']) ?></option>
                 <?php endforeach; ?>
               </select>
             </div>
 
-            <div class="form-group form-group col-md-6">
+            <div class="form-group form-group col-md-6" hidden>
               <label>Endereço (Morada)</label>
               <input name="Endereco" class="form-control" placeholder="Se o bairro não estiver na lista (Opcional)"/>
             </div>
