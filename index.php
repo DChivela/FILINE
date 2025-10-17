@@ -1,6 +1,6 @@
 <?php
 // index.php
-require_once __DIR__ . '/functions/config.php';
+require_once __DIR__ . '/config/conexao.php';
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
@@ -9,7 +9,7 @@ $stmt = $pdo->query("SELECT Cod_Tipo_Sangue, Tipo_Sangue FROM tb_Tipo_Sangue ORD
 $tipos = $stmt->fetchAll();
 $stmt = $pdo->query("SELECT Cod_Alergia, Tipo_Alergia FROM Tb_Alergia ORDER BY Tipo_Alergia");
 $alergias = $stmt->fetchAll();
-$stmt = $pdo->query("SELECT id, morada, rua FROM enderecos ORDER BY morada");
+$stmt = $pdo->query("SELECT Endereco, morada, rua FROM enderecos ORDER BY morada");
 $enderecos = $stmt->fetchAll();
 ?>
 <!DOCTYPE html>
@@ -130,17 +130,12 @@ $enderecos = $stmt->fetchAll();
           <div class="form-row">
             <div class="form-group form-group col-12">
               <label><i class="bi bi-signpost-2"></i> Endereço (Morada)</label>
-              <select name="id_endereco" class="form-control">
+              <select name="Endereco" class="form-control">
                 <option value="">Seleccione um Bairro</option>
                 <?php foreach ($enderecos as $en): ?>
-                  <option value="<?= htmlspecialchars($en['morada'] . ' - ' . $en['rua']) ?>"><?= htmlspecialchars($en['morada'] . ' - ' . $en['rua']) ?></option>
+                  <option value="<?= htmlspecialchars($en['Endereco']) ?>"><?= htmlspecialchars($en['morada'] . ' - ' . $en['rua']) ?></option>
                 <?php endforeach; ?>
               </select>
-            </div>
-
-            <div class="form-group form-group col-md-6" hidden>
-              <label>Endereço (Morada)</label>
-              <input name="Endereco" class="form-control" placeholder="Se o bairro não estiver na lista (Opcional)" />
             </div>
           </div>
 

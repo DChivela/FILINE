@@ -1,6 +1,6 @@
 <?php
 // list_pretriagem.php
-require_once __DIR__ . '/../src/config.php';
+require_once __DIR__ . '/../config/conexao.php';
 
 // parametros de pesquisa e paginação
 $q = isset($_GET['q']) ? trim($_GET['q']) : '';
@@ -54,7 +54,7 @@ $sql = "SELECT p.Cod_Pre_Triagem, p.Nome_Paciente, p.Senha_de_Atendimento, p.Sin
         FROM Tb_Pre_Triagem p
         LEFT JOIN tb_Tipo_Sangue t ON t.Cod_Tipo_Sangue = p.Tipo_Sangue
         LEFT JOIN Tb_Alergia a ON a.Cod_Alergia = p.Alergia
-        LEFT JOIN enderecos e ON e.id = p.id_endereco
+        LEFT JOIN enderecos e ON e.endereco = p.endereco
         $whereSql
         ORDER BY
           CASE

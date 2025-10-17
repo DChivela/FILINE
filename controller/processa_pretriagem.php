@@ -1,7 +1,7 @@
 <?php
 // public/store_pretriagem.php
-require_once __DIR__ . '/../src/config.php';
-require_once __DIR__ . '/../src/validate.php';
+require_once __DIR__ . '/../config/conexao.php';
+require_once __DIR__ . '/../functions/validate.php';
 
 // Pega post cru
 $post = filter_input_array(INPUT_POST, FILTER_UNSAFE_RAW);
@@ -332,26 +332,24 @@ $post['Classificacao_de_Risco'] = $classificacao_calculada;
 
 // PREPARA SQL (usar nome de coluna 'id_endereco' na lista de colunas)
 $sql_with_motivos = "INSERT INTO Tb_Pre_Triagem
-(Nome_Paciente, Nome_Encarregado, Genero_Paciente, Data_Nascimento, Contacto, Endereco, id_endereco,
- Tipo_Ocorrencia, Sintoma_Principal, Grupo_Ocorrencia, Classificacao_de_Risco, Motivos_Classificacao, Data_de_Registo, Tipo_Sangue, Alergia, Situacao, Senha_de_Atendimento)
- VALUES (:Nome_Paciente, :Nome_Encarregado, :Genero_Paciente, :Data_Nascimento, :Contacto, :Endereco, :id_endereco,
- :Tipo_Ocorrencia, :Sintoma_Principal, :Grupo_Ocorrencia, :Classificacao_de_Risco, :Motivos_Classificacao, :Data_de_Registo, :Tipo_Sangue, :Alergia, :Situacao, :Senha_de_Atendimento)";
+(Nome_Paciente, Genero_Paciente, Data_Nascimento, Contacto, 
+ Tipo_Ocorrencia, Sintoma_Principal, Grupo_Ocorrencia, Classificacao_de_Risco, Motivos_Classificacao, Data_de_Registo, Tipo_Sangue, Alergia, Endereco, Situacao, Senha_de_Atendimento)
+ VALUES (:Nome_Paciente, :Genero_Paciente, :Data_Nascimento, :Contacto, 
+ :Tipo_Ocorrencia, :Sintoma_Principal, :Grupo_Ocorrencia, :Classificacao_de_Risco, :Motivos_Classificacao, :Data_de_Registo, :Tipo_Sangue, :Alergia, :Endereco, :Situacao, :Senha_de_Atendimento)";
 
 $sql_without_motivos = "INSERT INTO Tb_Pre_Triagem
-(Nome_Paciente, Nome_Encarregado, Genero_Paciente, Data_Nascimento, Contacto, Endereco, id_endereco,
- Tipo_Ocorrencia, Sintoma_Principal, Grupo_Ocorrencia, Classificacao_de_Risco, Data_de_Registo, Tipo_Sangue, Alergia, Situacao, Senha_de_Atendimento)
- VALUES (:Nome_Paciente, :Nome_Encarregado, :Genero_Paciente, :Data_Nascimento, :Contacto, :Endereco, :id_endereco,
- :Tipo_Ocorrencia, :Sintoma_Principal, :Grupo_Ocorrencia, :Classificacao_de_Risco, :Data_de_Registo, :Tipo_Sangue, :Alergia, :Situacao, :Senha_de_Atendimento)";
+(Nome_Paciente, Genero_Paciente, Data_Nascimento, Contacto,
+ Tipo_Ocorrencia, Sintoma_Principal, Grupo_Ocorrencia, Classificacao_de_Risco, Data_de_Registo, Tipo_Sangue, Alergia, Endereco, Situacao, Senha_de_Atendimento)
+ VALUES (:Nome_Paciente, :Genero_Paciente, :Data_Nascimento, :Contacto,
+ :Tipo_Ocorrencia, :Sintoma_Principal, :Grupo_Ocorrencia, :Classificacao_de_Risco, :Data_de_Registo, :Tipo_Sangue, :Alergia, :Endereco, :Situacao, :Senha_de_Atendimento)";
 
 // Atenção: usa ?? para evitar warnings se a chave não existir
 $params_common = [
     ':Nome_Paciente' => $post['Nome_Paciente'] ?? null,
-    ':Nome_Encarregado' => $post['Nome_Encarregado'] ?? null,
+    // ':Nome_Encarregado' => $post['Nome_Encarregado'] ?? null,
     ':Genero_Paciente' => $post['Genero_Paciente'] ?? null,
     ':Data_Nascimento' => $post['Data_Nascimento'] ?? null,
     ':Contacto' => $post['Contacto'] ?? null,
-    ':Endereco' => $post['Endereco'] ?? null,
-    ':id_endereco' => isset($post['id_endereco']) ? $post['id_endereco'] : null,
     ':Tipo_Ocorrencia' => $post['Tipo_Ocorrencia'] ?? null,
     ':Sintoma_Principal' => $post['Sintoma_Principal'] ?? null,
     ':Grupo_Ocorrencia' => $grupo,
@@ -359,6 +357,7 @@ $params_common = [
     ':Data_de_Registo' => ($post['Data_de_Registo'] ?? '') !== '' ? $post['Data_de_Registo'] : date('Y-m-d H:i:s'),
     ':Tipo_Sangue' => $post['Tipo_Sangue'] ?? null,
     ':Alergia' => $post['Alergia'] ?? null,
+    ':Endereco' => $post['Endereco'] ?? null,
     ':Situacao' => $post['Situacao'] ?? null,
     ':Senha_de_Atendimento' => $senha
 ];
