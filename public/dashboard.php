@@ -1,5 +1,6 @@
 <?php
 // list_pretriagem.php
+require_once __DIR__ . '/../controller/auth.php';
 require_once __DIR__ . '/../config/conexao.php';
 
 // parametros de pesquisa e paginação
@@ -101,6 +102,10 @@ function tempo_humano($datetime_str)
   <meta charset="utf-8">
   <title>Lista de Espera — Filine-ON</title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="title" content="FILINE 2025">
+  <meta name="description" content="Sistema de Gestão Filas de Espera em Instituições de Saúde">
+  <meta name="keywords" content="Gestão, Pacientes, Filas, Espera">
+  <meta name="author" content="Filine - Estefânio Da Silva & Domingos Chivela">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
   <link rel="icon" href="../public/favicon.ico" type="image/x-icon">
@@ -204,7 +209,8 @@ function tempo_humano($datetime_str)
     <div>
       <a class="text-white mr-3" href="../index.php">Início</a>
       <a class="text-white mr-3" href="list_pretriagem.php">Consultar Espera</a>
-      <a class="text-white" href="#">Entrar</a>
+      <a class="text-white" href="public/login.php">Entrar</a>
+      <a class="text-white" href="../controller/tecnico_saude.php">Cadastrar Técnico</a>
     </div>
   </div>
 
@@ -226,6 +232,38 @@ function tempo_humano($datetime_str)
       </div>
     </div>
 
+    <!-- CARDS DE CONTAGEM -->
+    <div class="row mb-3">
+      <?php
+      $cardInfo = [
+        ['key' => 'VERMELHO', 'class' => 'risk-vermelho', 'icon' => 'fas fa-exclamation-triangle'],
+        ['key' => 'LARANJA', 'class' => 'risk-laranja', 'icon' => 'fas fa-exclamation-circle'],
+        ['key' => 'AMARELO', 'class' => 'risk-amarelo', 'icon' => 'fas fa-hourglass-half'],
+        ['key' => 'VERDE', 'class' => 'risk-verde', 'icon' => 'fas fa-check-circle'],
+        ['key' => 'AZUL', 'class' => 'risk-azul', 'icon' => 'fas fa-info-circle']
+      ];
+      foreach ($cardInfo as $ci):
+      ?>
+        <div class="col-md-2 col-sm-6 mb-2">
+          <div class="card card-risk <?= $ci['class'] ?> p-3 filter-btn" data-filter="<?= $ci['key'] ?>" role="button">
+            <div class="d-flex justify-content-between align-items-center">
+              <div>
+                <div class="small-muted"><?= $ci['key'] ?></div>
+                <div class="count"><?= $counts[$ci['key']] ?></div>
+              </div>
+              <div><i class="<?= $ci['icon'] ?> fa-2x"></i></div>
+            </div>
+            <div class="small-muted mt-2"><?= $total ? round($counts[$ci['key']] / $total * 100) : 0 ?>% do total</div>
+          </div>
+        </div>
+      <?php endforeach; ?>
+      <div class="col-md-2 col-sm-6 mb-2">
+        <div class="card p-3" role="button" id="clearFilterBtn">
+          <div class="small-muted">Mostrar Todos</div>
+          <div class="count"><?= $total ?></div>
+        </div>
+      </div>
+    </div>
 
     <?php if (isset($_GET['msg']) && $_GET['msg'] == 'ok'): ?>
       <div class="alert alert-success">Registado com sucesso. Senha: <strong><?= htmlspecialchars($_GET['senha'] ?? '') ?></strong>. Classificação: <strong><?= htmlspecialchars($_GET['class'] ?? '') ?></strong></div>

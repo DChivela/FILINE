@@ -372,9 +372,9 @@ try {
     header('Location: ../public/list_pretriagem.php?msg=ok&senha=' . urlencode($senha) . '&class=' . urlencode($post['Classificacao_de_Risco']));
     exit;
 } catch (PDOException $e) {
-    // log detalhado para dev
+    // log detalhado para melhor verificação
     error_log('Insert com motivos falhou: ' . $e->getMessage());
-    // tenta sem motivos
+    // tenta inserir sem motivos
     try {
         $stmt = $pdo->prepare($sql_without_motivos);
         $stmt->execute($params_common);
@@ -382,7 +382,7 @@ try {
         exit;
     } catch (PDOException $e2) {
         error_log('Insert sem motivos falhou: ' . $e2->getMessage());
-        // detalhe para depuração em desenvolvimento (remover/ocultar em produção)
+        // detalhe para depuração em desenvolvimento (local)
         echo "Erro ao gravar. Tente novamente.<br><pre>" . htmlspecialchars($e2->getMessage()) . "</pre>";
         exit;
     }

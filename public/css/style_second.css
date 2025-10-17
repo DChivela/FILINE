@@ -1,0 +1,119 @@
+    /* Estilização do Footer */
+    footer {
+      background-color: #333;
+      color: #fff;
+      text-align: center;
+      padding: 10px 0;
+      position: fixed;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      /* Garante que o body ocupe pelo menos a altura da viewport */
+    }
+
+    .success-message {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #28a745;
+      color: white;
+      padding: 15px 20px;
+      border-radius: 5px;
+      font-size: 18px;
+      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+      z-index: 1000;
+    }
+
+    /* 1. Container responsivo para tabelas */
+    .table-responsive {
+      width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      /* suaviza o scroll em iOS */
+      margin: 1rem 0;
+    }
+
+    /* 2. Estilo base da tabela */
+    .table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 1rem;
+      font-family: sans-serif;
+      font-size: 0.9rem;
+    }
+
+    .table th,
+    .table td {
+      padding: 0.75rem 1rem;
+      text-align: left;
+      border: 1px solid #ddd;
+    }
+
+    /* 3. Linhas zebras para leitura */
+    .table-striped tr:nth-child(even) {
+      background-color: rgba(0, 0, 0, 0.03);
+    }
+
+    /* 4. Cabeçalho fixo (opcional) */
+    .table-fixed thead {
+      position: sticky;
+      top: 0;
+      background-color: #f8f9fa;
+      z-index: 2;
+    }
+
+    /* 6. Media Queries */
+    /* Tablet (~≤768px) */
+    @media (max-width: 768px) {
+
+      .col-6,
+      .col-4,
+      .col-3 {
+        flex: 0 0 100%;
+      }
+
+      .header {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+
+    /* Mobile (~≤480px) */
+    @media (max-width: 412px) {
+      .container {
+        padding: 0 0.5rem;
+      }
+
+      .header {
+        padding: 0.5rem 0;
+      }
+
+      .card {
+        padding: 0.75rem;
+      }
+    }
+
+    /* 5. Ajustes em breakpoints */
+    /* Tablet (≤768px): redução de padding e fonte */
+    @media (max-width: 768px) {
+
+      .table th,
+      .table td {
+        padding: 0.5rem;
+        font-size: 0.85rem;
+      }
+    }
+
+    /* Mobile (≤480px): ainda mais compacto */
+    @media (max-width: 480px) {
+
+      .table-responsive th,
+      .table td {
+        padding: 0.4rem;
+        font-size: 0.8rem;
+      }
+    }

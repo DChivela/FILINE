@@ -13,9 +13,9 @@ Sistema WEB feito com as linguagens:
 Parte responsável pela base de dados. Tabelas:
 - ``pretriagem``: Tabela principal de pré-triagem () — guarda cada registo da páginal principal.
 - ``tb_triagem``;
-- ``tb_utilizador``;
+- ``tb_utilizador``: Redefinido o tamanho das colunas de 45 para 255;
 - ``tb_tipo_sangue``
-- ``enderecos``
+- ``enderecos`` Armazena os endereços de cada paciente e técnico de saúde cadastrado;
 - ``classificacoes_urgencia``: Tabela de classificações/urgências (opcional, para referências);
 - ``regras_triagem``: Tabela de regras (opcional avançado);
 

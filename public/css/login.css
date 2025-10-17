@@ -1,0 +1,149 @@
+        /* Reset básico */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Estilização do fundo */
+        /* Fundo com imagem */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: url('../img/Triagem_Login.jpg') no-repeat center center fixed;
+            background-size: cover;
+        }
+
+        /* Adiciona um efeito de fundo escurecido para melhor contraste */
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            /* Ajuste a opacidade se necessário */
+            z-index: 1;
+        }
+
+        .topbar {
+            position: fixed;
+            z-index: 3;
+            /* acima do fundo escuro e do login */
+            /* background-color: rgba(0, 0, 0, 0.6); */
+            /* fundo escuro semi-transparente */
+            color: white;
+            padding: 10px 20px;
+            width: 100%;
+            font-size: 16px;
+
+            top: 0;
+        }
+
+        /* Ajusta a camada do formulário */
+        .login-container {
+            position: relative;
+            z-index: 2;
+            background: rgba(255, 255, 255, 0.9);
+            /* Fundo semi-transparente */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+            width: 400px;
+            text-align: center;
+        }
+
+        /* Estilização do título */
+        .login-container h3 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        /* Inputs */
+        .input-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        /* Botão */
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            border: none;
+            color: white;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Mensagem de erro */
+        .error-message {
+            color: red;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .logo {
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .logo:hover {
+            transform: scale(1.5);
+            /* Aumenta a imagem em 15% */
+        }
+
+        /* 6. Media Queries */
+        /* Tablet (~≤768px) */
+        @media (max-width: 768px) {
+
+            .col-6,
+            .col-4,
+            .col-3 {
+                flex: 0 0 100%;
+            }
+
+            .header {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        /* Mobile (~≤480px) */
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 0.5rem;
+            }
+
+            .header {
+                padding: 0.5rem 0;
+            }
+
+            .card {
+                padding: 0.75rem;
+            }
+        }

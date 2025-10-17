@@ -85,7 +85,22 @@ $enderecos = $stmt->fetchAll();
     <div>
       <a class="text-white mr-3" href="index.php">Início</a>
       <a class="text-white mr-3" href="public/list_pretriagem.php">Consultar Espera</a>
-      <a class="text-white" href="#">Entrar</a>
+      <?php
+      if (!isset($_SESSION['Cod_Utilizador'])) {
+      ?>
+        <a class="text-white" href="../controller/tecnico_saude.php">Cadastrar Técnico</a>
+      <?php } ?>
+
+      <?php
+      if (isset($_SESSION['Cod_Utilizador'])) {
+      ?>
+        <a class="text-white" href="public/login.php">Entrar</a>
+      <?php } ?>
+      <?php
+      if (!isset($_SESSION['Cod_Utilizador'])) {
+      ?>
+        <a class="text-white" href="public/logout.php">Logout</a>
+      <?php } ?>
     </div>
   </div>
   <div class="hero">
