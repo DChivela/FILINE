@@ -1,6 +1,7 @@
 <?php
 // list_pretriagem.php
 require_once __DIR__ . '/../config/conexao.php';
+// require_once __DIR__ . '/../controller/auth.php';
 
 // parametros de pesquisa e paginação
 $q = isset($_GET['q']) ? trim($_GET['q']) : '';
@@ -199,14 +200,7 @@ function tempo_humano($datetime_str)
 </head>
 
 <body>
-  <div class="topbar d-flex justify-content-between align-items-center">
-    <div><strong>Filine-ON</strong></div>
-    <div>
-      <a class="text-white mr-3" href="../index.php">Início</a>
-      <a class="text-white mr-3" href="list_pretriagem.php">Consultar Espera</a>
-      <a class="text-white" href="#">Entrar</a>
-    </div>
-  </div>
+<?php include 'header.php'; ?>
 
   <div class="container mt-4">
 
@@ -225,7 +219,6 @@ function tempo_humano($datetime_str)
         </form>
       </div>
     </div>
-
 
     <?php if (isset($_GET['msg']) && $_GET['msg'] == 'ok'): ?>
       <div class="alert alert-success">Registado com sucesso. Senha: <strong><?= htmlspecialchars($_GET['senha'] ?? '') ?></strong>. Classificação: <strong><?= htmlspecialchars($_GET['class'] ?? '') ?></strong></div>

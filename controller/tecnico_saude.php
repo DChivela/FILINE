@@ -94,7 +94,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     // Remove tudo o que não for número
     let valor = input.value.replace(/\D/g, '');
 
-    // Se começar com o código do país, formate corretamente
+    // começar com o código do país
     if (valor.length <= 3) {
       input.value = '244 ' + valor; // Exibe apenas o código do país
     } else if (valor.length <= 6) {

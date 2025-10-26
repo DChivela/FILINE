@@ -28,13 +28,7 @@ $erro = isset($_GET['erro']) ? $_GET['erro'] : '';
 
 <body>
 
-    <div class="topbar d-flex justify-content-between align-items-center">
-        <div><strong>Filine-ON</strong></div>
-        <div>
-            <a class="text-white mr-3" href="../index.php"> Início</a>
-            <a class="text-white mr-3" href="../public/list_pretriagem.php">Consultar Espera</a>
-        </div>
-    </div>
+<?php include 'header.php'; ?>
 
     <div class="login-container">
         <!-- Loader responsável pelo efeito de processamento para mostrar que o pedido está a ser processado-->
@@ -50,7 +44,7 @@ $erro = isset($_GET['erro']) ? $_GET['erro'] : '';
         <form action="../controller/processa_login.php" method="POST">
             <div class="input-group">
                 <label for="email">E‑mail</label>
-                <input type="email" name="Email" placeholder="técnicodesaúde@gmail.com" required>
+                <input type="email" name="Email" placeholder="técnico.de.saúde@filine.com" required>
             </div>
             <div class="input-group">
                 <label for="senha">Senha</label>

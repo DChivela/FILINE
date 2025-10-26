@@ -1,6 +1,8 @@
 <?php
 // index.php
+session_start(); // Garantia da sessão ativa
 require_once __DIR__ . '/config/conexao.php';
+
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
@@ -28,7 +30,7 @@ $enderecos = $stmt->fetchAll();
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
   <link rel="icon" href="public/favicon.ico" type="image/x-icon">
-  <link rel="stylesheet" href="../public/css/styles.css">
+
   <style>
     body {
       background: #f8f9fa;
@@ -76,33 +78,13 @@ $enderecos = $stmt->fetchAll();
       padding-left: 12px;
       margin-top: 12px;
     }
+
+
   </style>
 </head>
 
 <body>
-  <div class="topbar d-flex justify-content-between align-items-center">
-    <div><strong>Filine-ON</strong></div>
-    <div>
-      <a class="text-white mr-3" href="index.php">Início</a>
-      <a class="text-white mr-3" href="public/list_pretriagem.php">Consultar Espera</a>
-      <?php
-      if (!isset($_SESSION['Cod_Utilizador'])) {
-      ?>
-        <a class="text-white" href="../controller/tecnico_saude.php">Cadastrar Técnico</a>
-      <?php } ?>
-
-      <?php
-      if (isset($_SESSION['Cod_Utilizador'])) {
-      ?>
-        <a class="text-white" href="public/login.php">Entrar</a>
-      <?php } ?>
-      <?php
-      if (!isset($_SESSION['Cod_Utilizador'])) {
-      ?>
-        <a class="text-white" href="public/logout.php">Logout</a>
-      <?php } ?>
-    </div>
-  </div>
+  <?php include 'public/header.php'; ?>
   <div class="hero">
     <div class="card p-3">
       <h2 class="text-center"><i class="fa fa-book" aria-hidden="true"></i> Filine - Serviços de Facilitação à Pré-Triagem</h2>
@@ -636,6 +618,7 @@ $enderecos = $stmt->fetchAll();
   </footer>
   <script src="functions/js/filter_ocorrencias.js"></script>
   <script src="functions/js/grupo_ocorrencias.js"></script>
+  
 
 </body>
 

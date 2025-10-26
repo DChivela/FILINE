@@ -1,0 +1,112 @@
+/* Estilo base da topbar */
+.topbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 3;
+    padding: 10px 20px;
+}
+
+/* Links do menu */
+.topbar a {
+    color: white;
+    text-decoration: none;
+    margin-right: 15px;
+    font-weight: 500;
+}
+.topbar a.active {
+    text-decoration: underline;
+    font-weight: 700;
+}
+
+.topbar a:hover {
+    text-decoration: underline;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Estilos do botão de menu hamburguer */
+    .navbar-toggler {
+      border: none;
+      background: transparent;
+      outline: none;
+    }
+
+    .navbar-toggler .icon-bar {
+      display: block;
+      width: 25px;
+      height: 3px;
+      background-color: white;
+      margin: 5px auto;
+      transition: all 0.3s;
+    }
+
+    .navbar-toggler.open .icon-bar:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 5px);
+    }
+
+    .navbar-toggler.open .icon-bar:nth-child(2) {
+      opacity: 0;
+    }
+
+    .navbar-toggler.open .icon-bar:nth-child(3) {
+      transform: rotate(-45deg) translate(5px, -5px);
+    }
+
+
+
+/* Dropdown container */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+/* Botão do dropdown transparente */
+.dropdown-toggle {
+    background-color: transparent;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+}
+
+.dropdown-toggle:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Menu suspenso */
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: white;
+    min-width: 180px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 10;
+    border-radius: 5px;
+    margin-top: 5px;
+}
+
+/* Itens do submenu */
+.dropdown-menu a {
+    color: #333;
+    padding: 10px 15px;
+    display: block;
+    text-decoration: none;
+}
+
+.dropdown-menu a:hover {
+    background-color: #f0f0f0;
+}
+
+
+/* Mostrar submenu ao passar o mouse */
+.dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+body {
+    padding-top: 60px; /* ou o valor exato da altura da topbar */
+}
