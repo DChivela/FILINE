@@ -138,7 +138,7 @@ $enderecos = $stmt->fetchAll();
 
           <div class="form-row">
             <div class="form-group col-md-6">
-              <label><i class="bi bi-medium"></i> Tipo de Sangue</label>
+              <label><i class="bi bi-droplet-half"></i> Tipo de Sangue</label>
               <select name="Tipo_Sangue" class="form-control">
                 <option value="">--</option>
                 <?php foreach ($tipos as $t): ?>

@@ -41,10 +41,10 @@
                 Geral
               </a>
               <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="../controller/tecnico_saude.php">Alergias</a></li>
+                <li><a class="dropdown-item" href="../controller/alergias.php">Alergias</a></li>
                 <li><a class="dropdown-item" href="../controller/listar_tecnicos.php">Bairros</a></li>
                 <li><a class="dropdown-item" href="../controller/listar_tecnicos.php">Ocorrências</a></li>
-                <li><a class="dropdown-item" href="../controller/listar_tecnicos.php">Tipos Sangueneo</a></li>
+                <li><a class="dropdown-item" href="../controller/tipo_sangue.php">Tipos Sangueneo</a></li>
                 <!-- <li><a class="dropdown-item" href="../controller/categorias_tecnicos.php">Categorias</a></li> -->
               </ul>
             </li>
