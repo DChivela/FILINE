@@ -35,7 +35,7 @@ if ($q !== '') {
   $params[':q'] = '%' . $q . '%';
 }
 if ($filter !== '' && in_array($filter, $classes)) {
-  $where[] = "p.Classificacao_de_Risco = :filter and p.Estado = 'PENDENTE'";
+  $where[] = "p.Classificacao_de_Risco = :filter and p.Situacao != 'Atendido'";
   $params[':filter'] = $filter;
 }
 $whereSql = '';
@@ -56,7 +56,7 @@ $sql = "SELECT p.Cod_Pre_Triagem, p.Nome_Paciente, p.Senha_de_Atendimento, p.Sin
         LEFT JOIN tb_Tipo_Sangue t ON t.Cod_Tipo_Sangue = p.Tipo_Sangue
         LEFT JOIN Tb_Alergia a ON a.Cod_Alergia = p.Alergia
         LEFT JOIN enderecos e ON e.endereco = p.endereco
-        $whereSql
+        $whereSql WHERE p.Situacao != 'Atendido'
         ORDER BY
           CASE
             WHEN p.Classificacao_de_Risco = 'VERMELHO' THEN 1

@@ -1,5 +1,6 @@
 <?php
 require '../config/conexao.php';
+// require 'auth.php';
 
 if (isset($_GET['id'], $_GET['acao'])) {
     $id = (int) $_GET['id'];
@@ -8,7 +9,7 @@ if (isset($_GET['id'], $_GET['acao'])) {
     if ($acao === 'atender') {
         $situacao = 'Em Andamento';
     } elseif ($acao === 'fechar') {
-        $situacao = 'Fechado';
+        $situacao = 'Atendido';
     } else {
         die('Ação inválida.');
     }
