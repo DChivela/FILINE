@@ -35,7 +35,7 @@ if ($q !== '') {
   $params[':q'] = '%' . $q . '%';
 }
 if ($filter !== '' && in_array($filter, $classes)) {
-  $where[] = "p.Classificacao_de_Risco = :filter";
+  $where[] = "p.Classificacao_de_Risco = :filter and p.Estado = 'PENDENTE'";
   $params[':filter'] = $filter;
 }
 $whereSql = '';
@@ -50,7 +50,7 @@ $totalPages = max(1, (int) ceil($totalFiltered / $perPage));
 
 // query principal com ordenação por prioridade e por Data_de_Registo asc (mais antigo em primeiro)
 $sql = "SELECT p.Cod_Pre_Triagem, p.Nome_Paciente, p.Senha_de_Atendimento, p.Sintoma_Principal, p.Data_de_Registo,
-               p.Classificacao_de_Risco, p.Grupo_Ocorrencia, p.Motivos_Classificacao,
+               p.Classificacao_de_Risco, p.Grupo_Ocorrencia, p.Motivos_Classificacao, p.Situacao,
                t.Tipo_Sangue, a.Tipo_Alergia, e.morada
         FROM Tb_Pre_Triagem p
         LEFT JOIN tb_Tipo_Sangue t ON t.Cod_Tipo_Sangue = p.Tipo_Sangue
@@ -108,6 +108,7 @@ function tempo_humano($datetime_str)
   <meta name="author" content="Filine - Estefânio Da Silva & Domingos Chivela">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
   <link rel="icon" href="../public/favicon.ico" type="image/x-icon">
   <style>
     body {
@@ -204,7 +205,7 @@ function tempo_humano($datetime_str)
 </head>
 
 <body>
-<?php include 'header.php'; ?>
+  <?php include 'header.php'; ?>
 
   <div class="container mt-4">
 
@@ -300,7 +301,17 @@ function tempo_humano($datetime_str)
               <td><?= htmlspecialchars($r['Tipo_Sangue']) ?></td>
               <td><?= htmlspecialchars($r['Tipo_Alergia']) ?></td>
               <td><?= htmlspecialchars($r['morada']) ?></td>
-              <td><a href="atender.php" class="btn btn-sm btn-primary mb-3">Atender <i class="bi bi-check2-square"></i></a></td>
+              <!-- <td><a href="triagem.php" class="btn btn-sm btn-primary mb-3">Atender</a></td> -->
+              <td><?= $r['Situacao'] ?></td>
+              <td>
+                <?php if ($r['Situacao'] == 'Em Espera') { ?>
+                  <a href="../controller/atualiza_situacao.php?id=<?= $r['Cod_Pre_Triagem'] ?>&acao=atender" class="btn btn-success btn-sm">Atender</a>
+                <?php } elseif ($r['Situacao'] == 'Em Andamento') { ?>
+                  <a href="../controller/atualiza_situacao.php?id=<?= $r['Cod_Pre_Triagem'] ?>&acao=fechar" class="btn btn-danger btn-sm">Fechar Atendimento</a>
+                <?php } else { ?>
+                  <span class="text-muted">Fechado</span>
+                <?php } ?>
+              </td>
             </tr>
           <?php endforeach; ?>
           <?php if (empty($rows)): ?>
