@@ -24,10 +24,12 @@ try {
     <title>Lista de Técnicos</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="icon" href="../public/favicon.ico" type="image/x-icon">
 </head>
 <body class="bg-light">
+    <?php include 'header.php'; ?>
 <div class="container mt-5">
-    <h2 class="mb-4">Lista de Técnicos</h2>
+    <h2 class="mb-4">Lista de Técnicos/Usuários</h2>
 
     <div class="d-flex flex-column flex-sm-row justify-content-between mb-3">
         <a href="../controller/tecnico_saude.php" class="btn btn-success mb-2 mb-sm-0">Cadastrar Técnico</a>
@@ -64,7 +66,7 @@ try {
                             <td><?= htmlspecialchars($tecnico['Contacto']) ?></td>
                             <td class="d-none d-md-table-cell"><?= htmlspecialchars($tecnico['Perfil_Acesso']) ?></td>
                             <td>
-                                <a href="editar_tecnico.php?id=<?= $tecnico['Cod_Utilizador'] ?>" class="btn btn-warning btn-sm">Editar</a>
+                                <a href="../controller/editar_tecnico.php?id=<?= $tecnico['Cod_Utilizador'] ?>" class="btn btn-warning btn-sm">Editar</a>
                                 <a href="#" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#modalConfirmarEliminacao" data-id="<?= $tecnico['Cod_Utilizador'] ?>">Excluir</a>
                             </td>
                         </tr>
@@ -103,7 +105,7 @@ try {
         const button = event.relatedTarget;
         const tecnicoId = button.getAttribute('data-id');
         const confirmarBtn = modal.querySelector('#confirmarEliminacaoBtn');
-        confirmarBtn.href = `eliminar_tecnico.php?id=${tecnicoId}`;
+        confirmarBtn.href = `../controller/excluir_tecnico.php?id=${tecnicoId}`;
     });
 </script>
 </body>

@@ -1,36 +1,30 @@
 <?php
 require 'auth.php';
-include 'config/conexao.php';
+include '../config/conexao.php';
 
-if (!isset($_GET['id'])) {
-    die("ID do técnico não fornecido.");
+if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
+    die("ID do técnico não fornecido ou inválido.");
 }
 
-$id = $_GET['id'];
+$id = (int)$_GET['id'];
 
-// Verificar se o técnico pode ser excluído
-$sql = "SELECT * FROM intervencoes WHERE tecnico_id = ?";
-$stmt = $conn->prepare($sql);
-$stmt->bind_param("i", $id);
-$stmt->execute();
-$result = $stmt->get_result();
+try {
+    // Verifica se o técnico existe
+    $stmt = $pdo->prepare("SELECT Cod_Utilizador FROM tb_utilizador WHERE Cod_Utilizador = ?");
+    $stmt->execute([$id]);
+    if ($stmt->rowCount() === 0) {
+        die("Técnico não encontrado.");
+    }
 
-if ($result->num_rows > 0) {
-    // O técnico está associado a uma intervenção, não pode ser excluído
-    header("Location: ..pulic/listar_tecnicos.php?erro=" . urlencode("Este técnico não pode ser excluído por estar associado a uma intervenção."));
+    // Elimina o técnico
+    $stmt = $pdo->prepare("DELETE FROM tb_utilizador WHERE Cod_Utilizador = ?");
+    $stmt->execute([$id]);
+
+    header("Location: ../public/listar_tecnicos.php?sucesso=" . urlencode("Técnico excluído com sucesso!"));
+    exit();
+} catch (PDOException $e) {
+    $erro = "Erro ao excluir: " . $e->getMessage();
+    header("Location: ../public/listar_tecnicos.php?erro=" . urlencode($erro));
     exit();
 }
-
-// Excluir o técnico
-$sql = "DELETE FROM tb_utilizador WHERE Cod_utilizador = ?";
-$stmt = $conn->prepare($sql);
-$stmt->bind_param("i", $id);
-
-if ($stmt->execute()) {
-    header("Location: ..public/listar_tecnicos.php?sucesso=" . urlencode("Técnico excluído com sucesso!"));
-} else {
-    header("Location: ..public/listar_tecnicos.php?erro=" . urlencode("Erro ao excluir técnico: " . $stmt->error));
-}
-
-$stmt->close();
-$conn->close();
+?>

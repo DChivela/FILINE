@@ -204,93 +204,17 @@ function tempo_humano($datetime_str)
 
   <div class="container mt-4">
 
-    <div class="d-flex justify-content-between align-items-center mb-3">
-      <h4 class="mb-0">Lista de Espera</h4>
-      <div>
-        <form class="form-inline" method="get" action="">
-          <input type="hidden" name="filter" value="<?= htmlspecialchars($filter) ?>">
-          <div class="form-group mr-2">
-            <input name="q" value="<?= htmlspecialchars($q) ?>" class="form-control form-control-sm" placeholder="Pesquisar nome ou senha">
-          </div>
-          <button class="btn btn-sm btn-outline-primary mr-2" type="submit">Pesquisar</button>
-          <?php if ($q !== '' || $filter !== ''): ?>
-            <a class="btn btn-sm btn-secondary" href="list_pretriagem.php">Limpar</a>
-          <?php endif; ?>
-        </form>
-      </div>
-    </div>
 
     <?php if (isset($_GET['msg']) && $_GET['msg'] == 'ok'): ?>
-      <div class="alert alert-success">Registado com sucesso. Senha: <strong><?= htmlspecialchars($_GET['senha'] ?? '') ?></strong>. Classificação: <strong><?= htmlspecialchars($_GET['class'] ?? '') ?></strong></div>
+      <div class="alert alert-success">Registado com sucesso. A sua senha é: <strong><?= htmlspecialchars($_GET['senha'] ?? '') ?></strong>.</div>
     <?php endif; ?>
 
     <!-- TABELA -->
     <div class="table-responsive">
-      <table class="table table-hover table-sm">
-        <thead class="thead-light">
-          <tr>
-            <th style="width:100px">Senha</th>
-            <th>Nome</th>
-            <th>Sintoma</th>
-            <th>Grupo</th>
-            <th>Classificação</th>
-            <th>Tempo de Espera</th>
-            <th>Data de Registo</th>
-            <th>Sangue</th>
-            <th>Alergia</th>
-            <th>Morada</th>
-          </tr>
-        </thead>
-        <tbody id="listaCorpo">
-          <?php foreach ($rows as $r):
-            $class = strtoupper(trim($r['Classificacao_de_Risco'] ?? 'AZUL'));
-            $badgeClass = 'azul';
-            if ($class === 'VERMELHO') $badgeClass = 'vermelho';
-            elseif ($class === 'LARANJA') $badgeClass = 'laranja';
-            elseif ($class === 'AMARELO') $badgeClass = 'amarelo';
-            elseif ($class === 'VERDE') $badgeClass = 'verde';
-            $tempo = tempo_humano($r['Data_de_Registo']);
-          ?>
-            <tr class="table-row-clickable" data-class="<?= $class ?>" data-id="<?= (int)$r['Cod_Pre_Triagem'] ?>">
-              <td><?= htmlspecialchars($r['Senha_de_Atendimento']) ?></td>
-              <td><?= htmlspecialchars($r['Nome_Paciente']) ?></td>
-              <td><?= htmlspecialchars($r['Sintoma_Principal']) ?></td>
-              <td><?= htmlspecialchars($r['Grupo_Ocorrencia'] ?? '') ?></td>
-              <td><span class="badge-class <?= $badgeClass ?>"><?= htmlspecialchars($class) ?></span></td>
-              <td><?= htmlspecialchars($tempo) ?></td>
-              <td><?= htmlspecialchars($r['Data_de_Registo']) ?></td>
-              <td><?= htmlspecialchars($r['Tipo_Sangue']) ?></td>
-              <td><?= htmlspecialchars($r['Tipo_Alergia']) ?></td>
-              <td><?= htmlspecialchars($r['morada']) ?></td>
-            </tr>
-          <?php endforeach; ?>
-          <?php if (empty($rows)): ?>
-            <tr>
-              <td colspan="9" class="text-center">Nenhum registo encontrado.</td>
-            </tr>
-          <?php endif; ?>
-        </tbody>
-      </table>
+
     </div>
 
-    <!-- PAGINAÇÃO -->
-    <nav aria-label="Pagination">
-      <ul class="pagination">
-        <?php
-        $baseUrl = 'list_pretriagem.php?';
-        // preserva q e filter ao construir links
-        $baseParams = [];
-        if ($q !== '') $baseParams['q'] = $q;
-        if ($filter !== '') $baseParams['filter'] = $filter;
-        for ($p = 1; $p <= $totalPages; $p++):
-          $params = $baseParams;
-          $params['page'] = $p;
-          $href = $baseUrl . http_build_query($params);
-        ?>
-          <li class="page-item <?= $p === $page ? 'active' : '' ?>"><a class="page-link" href="<?= $href ?>"><?= $p ?></a></li>
-        <?php endfor; ?>
-      </ul>
-    </nav>
+
 
   </div>
 

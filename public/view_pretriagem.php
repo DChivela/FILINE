@@ -82,7 +82,7 @@ function tempo_humano($datetime_str)
 
 <body>
   <div class="container mt-4">
-    <a href="list_pretriagem.php" class="btn btn-sm btn-secondary mb-3">&larr; Voltar à lista</a>
+    <a href="dashboard.php" class="btn btn-sm btn-secondary mb-3">&larr; Voltar à lista</a>
 
     <div class="row">
       <div class="col-md-8">

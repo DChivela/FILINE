@@ -276,6 +276,7 @@ function tempo_humano($datetime_str)
             <th>Sangue</th>
             <th>Alergia</th>
             <th>Morada</th>
+            <th>Operação</th>
           </tr>
         </thead>
         <tbody id="listaCorpo">
@@ -299,6 +300,7 @@ function tempo_humano($datetime_str)
               <td><?= htmlspecialchars($r['Tipo_Sangue']) ?></td>
               <td><?= htmlspecialchars($r['Tipo_Alergia']) ?></td>
               <td><?= htmlspecialchars($r['morada']) ?></td>
+              <td><a href="atender.php" class="btn btn-sm btn-primary mb-3">Atender <i class="bi bi-check2-square"></i></a></td>
             </tr>
           <?php endforeach; ?>
           <?php if (empty($rows)): ?>

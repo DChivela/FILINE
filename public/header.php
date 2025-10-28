@@ -32,7 +32,7 @@
               </a>
               <ul class="dropdown-menu">
                 <li><a class="dropdown-item" href="../controller/tecnico_saude.php">Novo Técnico</a></li>
-                <li><a class="dropdown-item" href="../controller/listar_tecnicos.php">Lista de Técnicos</a></li>
+                <li><a class="dropdown-item" href="../public/listar_tecnicos.php">Lista de Técnicos</a></li>
                 <!-- <li><a class="dropdown-item" href="../controller/categorias_tecnicos.php">Categorias</a></li> -->
               </ul>
             </li>
@@ -43,7 +43,7 @@
               <ul class="dropdown-menu">
                 <li><a class="dropdown-item" href="../controller/alergias.php">Alergias</a></li>
                 <li><a class="dropdown-item" href="../controller/enderecos.php">Bairros</a></li>
-                <li><a class="dropdown-item" href="../controller/listar_tecnicos.php">Ocorrências</a></li>
+                <li><a class="dropdown-item" href="../controller/reports.php">Relatórios</a></li>
                 <li><a class="dropdown-item" href="../controller/tipo_sangue.php">Tipos Sangueneos</a></li>
                 <!-- <li><a class="dropdown-item" href="../controller/categorias_tecnicos.php">Categorias</a></li> -->
               </ul>

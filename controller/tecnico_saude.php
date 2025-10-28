@@ -45,6 +45,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 </head>
 
 <body class="bg-light">
+  <?php include '../public/header.php' ?>
   <div class="container mt-5">
     <h2 class="mb-4">Técnico</h2>
 

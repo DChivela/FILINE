@@ -4,7 +4,8 @@
     top: 0;
     left: 0;
     width: 100%;
-    background-color: rgba(0, 0, 0, 0.6);
+    /* background-color: rgba(0, 0, 0, 0.6); */
+    background-color: #0b69a3df;
     z-index: 3;
     padding: 10px 20px;
 }
