@@ -170,6 +170,7 @@ function tempo_humano($datetime_str)
           <p class="muted">ID: <?= (int)$r['Cod_Pre_Triagem'] ?></p>
           <p class="muted">Senha: <?= esc($r['Senha_de_Atendimento']) ?></p>
           <p class="muted">Criado: <?= esc($r['Data_de_Registo']) ?></p>
+          <div class="label">Estado: <p class="muted"><?= esc($r['Situacao']) ?></p></div>
         </div>
       </div>
     </div>

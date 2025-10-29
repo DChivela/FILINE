@@ -27,7 +27,7 @@ foreach ($countsRaw as $c) {
 }
 
 // Monta where dinamico para pesquisa / filtro
-$where = [];
+$where = ["p.Situacao != 'Atendido'"];
 $params = [];
 if ($q !== '') {
   // busca por nome ou senha
@@ -35,7 +35,7 @@ if ($q !== '') {
   $params[':q'] = '%' . $q . '%';
 }
 if ($filter !== '' && in_array($filter, $classes)) {
-  $where[] = "p.Classificacao_de_Risco = :filter and p.Situacao != 'Atendido'";
+  $where[] = "p.Classificacao_de_Risco = :filter";
   $params[':filter'] = $filter;
 }
 $whereSql = '';
@@ -56,7 +56,7 @@ $sql = "SELECT p.Cod_Pre_Triagem, p.Nome_Paciente, p.Senha_de_Atendimento, p.Sin
         LEFT JOIN tb_Tipo_Sangue t ON t.Cod_Tipo_Sangue = p.Tipo_Sangue
         LEFT JOIN Tb_Alergia a ON a.Cod_Alergia = p.Alergia
         LEFT JOIN enderecos e ON e.endereco = p.endereco
-        $whereSql AND p.Situacao != 'Atendido'
+        $whereSql
         ORDER BY
           CASE
             WHEN p.Classificacao_de_Risco = 'VERMELHO' THEN 1
@@ -219,7 +219,7 @@ function tempo_humano($datetime_str)
           </div>
           <button class="btn btn-sm btn-outline-primary mr-2" type="submit">Pesquisar</button>
           <?php if ($q !== '' || $filter !== ''): ?>
-            <a class="btn btn-sm btn-secondary" href="list_pretriagem.php">Limpar</a>
+            <a class="btn btn-sm btn-secondary" href="dashboard.php">Limpar</a>
           <?php endif; ?>
         </form>
       </div>
@@ -310,7 +310,7 @@ function tempo_humano($datetime_str)
                   <button class="btn btn-secondary btn-sm" disabled>Atender</button>
                 <?php } ?>
               </td>
-              <td><?= $r['Situacao'] ?></td>
+              <td><?= $r['Situacao']?></td>
             </tr>
           <?php endforeach; ?>
           <?php if (empty($rows)): ?>
