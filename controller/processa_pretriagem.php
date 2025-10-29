@@ -358,7 +358,7 @@ $params_common = [
     ':Tipo_Sangue' => $post['Tipo_Sangue'] ?? null,
     ':Alergia' => $post['Alergia'] ?? '',
     ':Endereco' => $post['Endereco'] ?? null,
-    ':Situacao' => $post['Situacao'] ?? null,
+    ':Situacao' => $post['Situacao'] ?? 'Em Espera',
     ':Senha_de_Atendimento' => $senha
 ];
 

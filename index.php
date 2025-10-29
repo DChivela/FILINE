@@ -128,7 +128,7 @@ $enderecos = $stmt->fetchAll();
             <div class="form-group form-group col-12">
               <label><i class="bi bi-signpost-2"></i> Endereço (Morada)</label>
               <select name="Endereco" class="form-control">
-                <option value="">Seleccione um Bairro</option>
+                <option value="--">Seleccione um Bairro</option>
                 <?php foreach ($enderecos as $en): ?>
                   <option value="<?= htmlspecialchars($en['Endereco']) ?>"><?= htmlspecialchars($en['morada'] . ' - ' . $en['rua']) ?></option>
                 <?php endforeach; ?>
@@ -140,7 +140,7 @@ $enderecos = $stmt->fetchAll();
             <div class="form-group col-md-6">
               <label><i class="bi bi-droplet-half"></i> Tipo de Sangue</label>
               <select name="Tipo_Sangue" class="form-control">
-                <option value="">--</option>
+                <option value="6">--</option>
                 <?php foreach ($tipos as $t): ?>
                   <option value="<?= htmlspecialchars($t['Cod_Tipo_Sangue']) ?>"><?= htmlspecialchars($t['Tipo_Sangue']) ?></option>
                 <?php endforeach; ?>
@@ -149,7 +149,7 @@ $enderecos = $stmt->fetchAll();
             <div class="form-group col-md-6">
               <label><i class="bi bi-capsule"></i> Alergia</label>
               <select name="Alergia" class="form-control">
-                <option value="">Nenhuma</option>
+                <option value="7">Nenhuma</option>
                 <?php foreach ($alergias as $a): ?>
                   <option value="<?= htmlspecialchars($a['Cod_Alergia']) ?>"><?= htmlspecialchars($a['Tipo_Alergia']) ?></option>
                 <?php endforeach; ?>
@@ -595,7 +595,7 @@ $enderecos = $stmt->fetchAll();
           </div>
           <!-- Fim dos grupos -->
 
-          <div class="mt-3">
+          <div class="mt-3" hidden>
             <strong>Classificação sugerida: </strong>
             <span id="badgeRisk" class="badge-risk badge badge-secondary">—</span>
           </div>
