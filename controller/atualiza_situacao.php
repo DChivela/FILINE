@@ -24,7 +24,7 @@ if (isset($_GET['id'], $_GET['acao'])) {
 
         // Se for atendimento, redireciona para a página de triagem
         if ($acao === 'atender') {
-            header("Location: triagem.php?pretriagem_id=$id");
+            header("Location: ../public/triagem.php?pretriagem_id=$id");
         } else {
             header("Location: ../public/dashboard.php?msg=sucesso");
         }

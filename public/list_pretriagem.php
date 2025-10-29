@@ -35,7 +35,7 @@ if ($q !== '') {
   $params[':q'] = '%' . $q . '%';
 }
 if ($filter !== '' && in_array($filter, $classes)) {
-  $where[] = "p.Classificacao_de_Risco = :filter";
+  $where[] = "p.Classificacao_de_Risco = :filter and p.Situacao != 'Atendido'";
   $params[':filter'] = $filter;
 }
 $whereSql = '';
@@ -56,7 +56,7 @@ $sql = "SELECT p.Cod_Pre_Triagem, p.Nome_Paciente, p.Senha_de_Atendimento, p.Sin
         LEFT JOIN tb_Tipo_Sangue t ON t.Cod_Tipo_Sangue = p.Tipo_Sangue
         LEFT JOIN Tb_Alergia a ON a.Cod_Alergia = p.Alergia
         LEFT JOIN enderecos e ON e.endereco = p.endereco
-        $whereSql
+        $whereSql AND Situacao != 'Atendido'
         ORDER BY
           CASE
             WHEN p.Classificacao_de_Risco = 'VERMELHO' THEN 1
@@ -200,22 +200,36 @@ function tempo_humano($datetime_str)
 </head>
 
 <body>
-<?php include 'header.php'; ?>
+  <?php include 'header.php'; ?>
 
-  <div class="container mt-4">
-
-
-    <?php if (isset($_GET['msg']) && $_GET['msg'] == 'ok'): ?>
-      <div class="alert alert-success">Registado com sucesso. A sua senha é: <strong><?= htmlspecialchars($_GET['senha'] ?? '') ?></strong>.</div>
-    <?php endif; ?>
-
-    <!-- TABELA -->
-    <div class="table-responsive">
-
+  <!-- substitui a parte do form/resultado existente pelo bloco abaixo -->
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h4 class="mb-0">Lista de Espera</h4>
+    <div>
+      <form class="form-inline" method="get" action="">
+        <input type="hidden" name="filter" value="<?= htmlspecialchars($filter) ?>">
+        <div class="form-group mr-2">
+          <input id="searchInput" name="q" value="<?= htmlspecialchars($q) ?>" class="form-control form-control-sm" placeholder="Pesquisar nome ou senha">
+        </div>
+        <button class="btn btn-sm btn-outline-primary mr-2" type="submit">Pesquisar</button>
+        <?php if ($q !== '' || $filter !== ''): ?>
+          <a class="btn btn-sm btn-secondary" href="list_pretriagem.php">Limpar</a>
+        <?php endif; ?>
+      </form>
     </div>
+  </div>
 
+  <?php if (isset($_GET['msg']) && $_GET['msg'] == 'ok'): ?>
+    <div class="alert alert-success">Registado com sucesso. A sua senha é: <strong><?= htmlspecialchars($_GET['senha'] ?? '') ?></strong>.</div>
+  <?php endif; ?>
 
+  <!-- AREA DE RESULTADO RÁPIDO PARA USUÁRIO NÃO LOGADO -->
+  <div id="publicSearchResult" class="mb-3" style="display:none;"></div>
 
+  <!-- tabela normal (mantém a tua tabela existente) -->
+  <div class="table-responsive" id="normalTableContainer">
+    <!-- aqui vai a table existente (mantém o teu render server-side) -->
+    <!-- ... -->
   </div>
 
   <footer class="fixed-bottom">© 2024 Filine-ON. Todos os direitos reservados.</footer>
@@ -248,6 +262,105 @@ function tempo_humano($datetime_str)
       });
     });
   </script>
+
+<!-- PESQUISA EXACTA DA SENHA COM JAVASCRIPT E FETCH API -->
+<script>
+  // debounce helper
+  function debounce(fn, delay) {
+    let t;
+    return function(...args) {
+      clearTimeout(t);
+      t = setTimeout(() => fn.apply(this, args), delay);
+    };
+  }
+
+  const input = document.getElementById('searchInput');
+  const resultDiv = document.getElementById('publicSearchResult');
+  const normalTable = document.getElementById('normalTableContainer');
+
+  // chama o endpoint só se o input parece uma senha (evitar buscas por nomes)
+  // aqui assumimos que senhas têm letras/dígitos; podes ajustar a validação
+  function looksLikeSenha(v) {
+    // regra simples: comprimento entre 2 e 20 e sem espaços
+    return v && v.length >= 2 && v.length <= 50 && !(/\s/.test(v));
+  }
+
+  async function checkSenha(q) {
+    if (!looksLikeSenha(q)) {
+      resultDiv.style.display = 'none';
+      resultDiv.innerHTML = '';
+      normalTable.style.display = '';
+      return;
+    }
+
+    try {
+      const resp = await fetch('ajax_check_senha.php?q=' + encodeURIComponent(q), { credentials: 'same-origin' });
+      if (!resp.ok) {
+        // 404 = não encontrada -> limpa resultado e mostra a tabela normal
+        resultDiv.style.display = 'none';
+        resultDiv.innerHTML = '';
+        normalTable.style.display = '';
+        return;
+      }
+      const json = await resp.json();
+      if (json.ok && json.data) {
+        // montar HTML limpo com os campos públicos
+        const d = json.data;
+        const html = `
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Estado do Atendimento — Senha: <strong>${escapeHtml(d.Senha_de_Atendimento)}</strong></h5>
+              <p class="mb-1"><strong>Nome:</strong> ${escapeHtml(d.Nome_Paciente)}</p>
+              <p class="mb-1"><strong>Grupo:</strong> ${escapeHtml(d.Grupo_Ocorrencia || '-')}</p>
+              <p class="mb-1"><strong>Classificação:</strong> ${escapeHtml(d.Classificacao_de_Risco || '-')}</p>
+              <p class="mb-1"><strong>Situação:</strong> ${escapeHtml(d.Situacao || '-')}</p>
+              <p class="mb-1"><strong>Data de Registo:</strong> ${escapeHtml(d.Data_de_Registo || '-')}</p>
+              <p class="mb-1"><strong>Tipo Sanguíneo:</strong> ${escapeHtml(d.Tipo_Sangue || '-')}</p>
+              <p class="mb-1"><strong>Alergia:</strong> ${escapeHtml(d.Alergia || '-')}</p>
+              <div class="mt-2">
+                <a class="btn btn-sm btn-primary" href="view_pretriagem.php?id=${encodeURIComponent(d.Cod_Pre_Triagem)}">Ver detalhe (profissionais)</a>
+                <a class="btn btn-sm btn-outline-secondary" href="view_publico.php?id=${encodeURIComponent(d.Cod_Pre_Triagem)}">Versão pública</a>
+              </div>
+            </div>
+          </div>
+        `;
+        resultDiv.innerHTML = html;
+        resultDiv.style.display = '';
+        // esconder a tabela completa para focar o resultado público
+        normalTable.style.display = 'none';
+      } else {
+        resultDiv.style.display = 'none';
+        resultDiv.innerHTML = '';
+        normalTable.style.display = '';
+      }
+    } catch (err) {
+      console.error(err);
+      resultDiv.style.display = 'none';
+      resultDiv.innerHTML = '';
+      normalTable.style.display = '';
+    }
+  }
+
+  const debounced = debounce(function() {
+    const v = input.value.trim();
+    if (v === '') {
+      resultDiv.style.display = 'none';
+      resultDiv.innerHTML = '';
+      normalTable.style.display = '';
+      return;
+    }
+    checkSenha(v);
+  }, 300);
+
+  input.addEventListener('input', debounced);
+
+  // small helper to escape html
+  function escapeHtml(s) {
+    if (!s) return '';
+    return s.replace(/[&<>"']/g, function(m){ return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]); });
+  }
+</script>
+
 </body>
 
 </html>

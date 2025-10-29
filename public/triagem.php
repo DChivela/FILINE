@@ -22,10 +22,10 @@ $stmt = $pdo->prepare("
 ");
 $stmt->bindParam(':id', $id, PDO::PARAM_INT);
 $stmt->execute();
-$paciente = $stmt->fetch(PDO::FETCH_ASSOC);
+$pre_triagem = $stmt->fetch(PDO::FETCH_ASSOC);
 
 
-if (!$paciente) {
+if (!$pre_triagem) {
     die("Registo não encontrado.");
 }
 ?>
@@ -147,31 +147,31 @@ if (!$paciente) {
 
             <h2 class="mb-0">Triagem do Paciente</h2>
 
-            <form method="POST" action="gravar_triagem.php">
-                <input type="hidden" name="Cod_Pre_Triagem" value="<?= htmlspecialchars($paciente['Cod_Pre_Triagem']) ?>">
+            <form method="POST" action="../controller/grava_triagem.php">
+                <input type="hidden" name="Cod_Pre_Triagem" value="<?= htmlspecialchars($pre_triagem['Cod_Pre_Triagem']) ?>">
 
                 <div class="row">
                     <div class="form-group col-md-6">
                         <label>Nome do Paciente:</label>
                         <input type="text" name="Nome_Paciente" class="form-control"
-                            value="<?= htmlspecialchars($paciente['Nome_Paciente']) ?>" readonly>
+                            value="<?= htmlspecialchars($pre_triagem['Nome_Paciente']) ?>" readonly>
                     </div>
                     <div class="form-group col-md-6">
                         <label>Género:</label>
                         <input type="text" name="Genero" class="form-control"
-                            value="<?= htmlspecialchars($paciente['Genero_Paciente']) ?>" readonly>
+                            value="<?= htmlspecialchars($pre_triagem['Genero_Paciente']) ?>" readonly>
                     </div>
                 </div>
                 <div class="row">
                     <div class="form-group col-md-6">
                         <label>Ocorrência:</label>
                         <input type="text" name="Grupo_Ocorrencia" class="form-control"
-                            value="<?= htmlspecialchars($paciente['Grupo_Ocorrencia']) ?>" readonly>
+                            value="<?= htmlspecialchars($pre_triagem['Grupo_Ocorrencia']) ?>" readonly>
                     </div>
                     <div class="form-group col-md-6">
                         <label>Detalhes da Ocorrência:</label>
                         <input type="text" name="Motivos_Classificacao" class="form-control"
-                            value="<?= htmlspecialchars($paciente['Motivos_Classificacao']) ?>" readonly>
+                            value="<?= htmlspecialchars($pre_triagem['Motivos_Classificacao']) ?>" readonly>
                     </div>
                 </div>
 
@@ -179,12 +179,12 @@ if (!$paciente) {
                     <div class="form-group col-md-6">
                         <label>Tipo Sangueneo:</label>
                         <input type="text" name="Tipo_Sangue_Nome" class="form-control"
-                            value="<?= htmlspecialchars($paciente['Tipo_Sangue_Nome']) ?>" readonly>
+                            value="<?= htmlspecialchars($pre_triagem['Tipo_Sangue_Nome']) ?>" readonly>
                     </div>
                     <div class="form-group col-md-6">
                         <label>Alergia:</label>
                         <input type="text" name="Alergia" class="form-control"
-                            value="<?= htmlspecialchars($paciente['Alergia_Nome']) ?>" readonly>
+                            value="<?= htmlspecialchars($pre_triagem['Alergia_Nome']) ?>" readonly>
                     </div>
                 </div>
                 <hr>
@@ -192,7 +192,7 @@ if (!$paciente) {
                 <div class="row">
                     <div class="col-md-3">
                         <label>Peso (kg):</label>
-                        <input type="text" name="Peso" class="form-control">
+                        <input type="text" name="Peso" class="form-control" required>
                     </div>
                     <div class="col-md-3">
                         <label>Altura (cm):</label>
@@ -200,11 +200,11 @@ if (!$paciente) {
                     </div>
                     <div class="col-md-3">
                         <label>P/A:</label>
-                        <input type="text" name="PA" class="form-control">
+                        <input type="text" name="PA" class="form-control" maxlength="2">
                     </div>
                     <div class="col-md-3">
                         <label>P/B:</label>
-                        <input type="text" name="PB" class="form-control">
+                        <input type="text" name="PB" class="form-control" maxlength="2">
                     </div>
                 </div>
 
@@ -230,11 +230,11 @@ if (!$paciente) {
                 <div class="row mt-3">
                     <div class="col-md-6">
                         <label>Dor:</label>
-                        <input type="text" name="Dor" class="form-control">
+                        <input type="text" name="Dor" class="form-control" aria-required="true">
                     </div>
                     <div class="col-md-6">
                         <label>Temperatura (°C):</label>
-                        <input type="text" name="Temperatura" class="form-control">
+                        <input type="text" name="Temperatura" class="form-control" required maxlength="2">
                     </div>
                 </div>
                 <hr>
@@ -242,29 +242,31 @@ if (!$paciente) {
                     <div class="form-group col-md-6">
                         <label>Data de Nascimento:</label>
                         <input type="text" name="Data_Nascimento" class="form-control"
-                            value="<?= htmlspecialchars($paciente['Data_Nascimento']) ?>" readonly>
+                            value="<?= htmlspecialchars($pre_triagem['Data_Nascimento']) ?>" readonly>
                     </div>
                     <div class="form-group col-md-6">
                         <label>Contacto:</label>
                         <input type="text" name="Contacto" class="form-control"
-                            value="<?= htmlspecialchars($paciente['Contacto']) ?>" readonly>
+                            value="<?= htmlspecialchars($pre_triagem['Contacto']) ?>" readonly>
                     </div>
                 </div>
                 <div class="row">
                     <div class="form-group col-md-6">
                         <label>Senha de Atendimento:</label>
                         <input type="text" name="Data_Nascimento" class="form-control"
-                            value="<?= htmlspecialchars($paciente['Senha_de_Atendimento']) ?>" readonly>
+                            value="<?= htmlspecialchars($pre_triagem['Senha_de_Atendimento']) ?>" readonly>
                     </div>
                     <div class="form-group col-md-6">
                         <label>Bairro:</label>
                         <input type="text" name="Contacto" class="form-control"
-                            value="<?= htmlspecialchars($paciente['Endereco_Morada']) ?>" readonly>
+                            value="<?= htmlspecialchars($pre_triagem['Endereco_Morada']) ?>" readonly>
                     </div>
                 </div>
 
                 <div class="mt-4">
-                    <button type="submit" class="btn btn-primary">Gravar Triagem</button>
+                    <?php if ($pre_triagem['Situacao'] == 'Em Andamento') { ?>
+                        <button type="submit" class="btn btn-primary">Gravar Triagem</button>
+                    <?php } ?>
                 </div>
             </form>
         </div>

@@ -2,7 +2,7 @@
 session_start();
 // Se já estiver logado, redireciona
 if (isset($_SESSION['Cod_Utilizador'])) {
-    header('Location: ../dashboard.php');
+    header('Location: ../index.php');
     exit();
 }
 

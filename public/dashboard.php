@@ -56,7 +56,7 @@ $sql = "SELECT p.Cod_Pre_Triagem, p.Nome_Paciente, p.Senha_de_Atendimento, p.Sin
         LEFT JOIN tb_Tipo_Sangue t ON t.Cod_Tipo_Sangue = p.Tipo_Sangue
         LEFT JOIN Tb_Alergia a ON a.Cod_Alergia = p.Alergia
         LEFT JOIN enderecos e ON e.endereco = p.endereco
-        $whereSql WHERE p.Situacao != 'Atendido'
+        $whereSql AND p.Situacao != 'Atendido'
         ORDER BY
           CASE
             WHEN p.Classificacao_de_Risco = 'VERMELHO' THEN 1
@@ -278,6 +278,7 @@ function tempo_humano($datetime_str)
             <th>Alergia</th>
             <th>Morada</th>
             <th>Operação</th>
+            <th>Estado</th>
           </tr>
         </thead>
         <tbody id="listaCorpo">
@@ -302,16 +303,14 @@ function tempo_humano($datetime_str)
               <td><?= htmlspecialchars($r['Tipo_Alergia']) ?></td>
               <td><?= htmlspecialchars($r['morada']) ?></td>
               <!-- <td><a href="triagem.php" class="btn btn-sm btn-primary mb-3">Atender</a></td> -->
-              <td><?= $r['Situacao'] ?></td>
               <td>
                 <?php if ($r['Situacao'] == 'Em Espera') { ?>
                   <a href="../controller/atualiza_situacao.php?id=<?= $r['Cod_Pre_Triagem'] ?>&acao=atender" class="btn btn-success btn-sm">Atender</a>
-                <?php } elseif ($r['Situacao'] == 'Em Andamento') { ?>
-                  <a href="../controller/atualiza_situacao.php?id=<?= $r['Cod_Pre_Triagem'] ?>&acao=fechar" class="btn btn-danger btn-sm">Fechar Atendimento</a>
                 <?php } else { ?>
-                  <span class="text-muted">Fechado</span>
+                  <button class="btn btn-secondary btn-sm" disabled>Atender</button>
                 <?php } ?>
               </td>
+              <td><?= $r['Situacao'] ?></td>
             </tr>
           <?php endforeach; ?>
           <?php if (empty($rows)): ?>

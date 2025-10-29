@@ -15,13 +15,13 @@
       <div class="collapse navbar-collapse justify-content-end" id="topbarMenu">
         <ul class="navbar-nav gap-2">
           <li class="nav-item">
-            <a class="nav-link text-white" href="http://localhost:3000/index.php">Início</a>
+            <a class="nav-link text-white" href="http://localhost:8000/index.php">Início</a>
           </li>
           <?php if (!isset($_SESSION['Cod_Utilizador']) ):?>
-          <a class="nav-link text-white" href="http://localhost:3000/public/list_pretriagem.php">Consultar Espera</a>
+          <a class="nav-link text-white" href="http://localhost:8000/public/list_pretriagem.php">Consultar Espera</a>
           <?php else: ?>
           <li class="nav-item">
-            <a class="nav-link text-white" href="http://localhost:3000/public/dashboard.php">Lista de Espera</a>
+            <a class="nav-link text-white" href="http://localhost:8000/public/dashboard.php">Lista de Espera</a>
           </li>
           <?php endif; ?>
 
@@ -51,11 +51,11 @@
           <?php endif; ?>
           <?php if (!isset($_SESSION['Cod_Utilizador'])): ?>
             <li class="nav-item">
-              <a class="nav-link text-white" href="http://localhost:3000/public/login.php">Entrar</a>
+              <a class="nav-link text-white" href="http://localhost:8000/public/login.php">Entrar</a>
             </li>
           <?php else: ?>
             <li class="nav-item">
-              <a class="nav-link text-white" href="http://localhost:3000/public/logout.php">Logout</a>
+              <a class="nav-link text-white" href="http://localhost:8000/public/logout.php">Logout</a>
             </li>
           <?php endif; ?>
         </ul>
