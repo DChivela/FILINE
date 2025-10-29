@@ -10,9 +10,14 @@ if (isset($_GET['id'], $_GET['acao'])) {
         $situacao = 'Em Andamento';
     } elseif ($acao === 'fechar') {
         $situacao = 'Atendido';
+        // Se sair da triagem com cancelar
+    } elseif ($acao === 'cancelar') {
+        $situacao = 'Em Espera';
     } else {
         die('Ação inválida.');
     }
+
+    
 
     try {
         // Atualiza o estado

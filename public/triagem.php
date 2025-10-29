@@ -267,6 +267,7 @@ if (!$pre_triagem) {
                     <?php if ($pre_triagem['Situacao'] == 'Em Andamento') { ?>
                         <button type="submit" class="btn btn-primary">Gravar Triagem</button>
                     <?php } ?>
+                    <a href="../controller/atualiza_situacao.php?id=<?= $pre_triagem['Cod_Pre_Triagem'] ?>&acao=cancelar" class="btn btn-secondary">Cancelar</a>
                 </div>
             </form>
         </div>

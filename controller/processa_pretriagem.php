@@ -356,7 +356,7 @@ $params_common = [
     ':Classificacao_de_Risco' => $post['Classificacao_de_Risco'] ?? $classificacao_calculada,
     ':Data_de_Registo' => ($post['Data_de_Registo'] ?? '') !== '' ? $post['Data_de_Registo'] : date('Y-m-d H:i:s'),
     ':Tipo_Sangue' => $post['Tipo_Sangue'] ?? null,
-    ':Alergia' => $post['Alergia'] ?? null,
+    ':Alergia' => $post['Alergia'] ?? '',
     ':Endereco' => $post['Endereco'] ?? null,
     ':Situacao' => $post['Situacao'] ?? null,
     ':Senha_de_Atendimento' => $senha

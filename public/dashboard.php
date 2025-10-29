@@ -26,7 +26,7 @@ foreach ($countsRaw as $c) {
   $total += (int) $c['cnt'];
 }
 
-// Monta where dinamico para pesquisa / filtro
+// where dinamico para pesquisa / filtro
 $where = ["p.Situacao != 'Atendido'"];
 $params = [];
 if ($q !== '') {
