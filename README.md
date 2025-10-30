@@ -132,4 +132,8 @@ _Importante:_ a avaliação pode combinar fatores (idade, comorbidades); é impo
 - Acessibilidade: bom contraste, labels, e capacidade de usar teclado.
 
 
+## Informações Adicionais Sobre as Páginas
+Todas as páginas que têm a função de gravar ou processar qualquer informação que vai para a base de dados, estão 
+
+
 

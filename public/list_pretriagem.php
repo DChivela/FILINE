@@ -27,7 +27,7 @@ foreach ($countsRaw as $c) {
 }
 
 // Monta where dinamico para pesquisa / filtro
-$where = [];
+$where = ["p.Situacao != 'Atendido'"];
 $params = [];
 if ($q !== '') {
   // busca por nome ou senha
