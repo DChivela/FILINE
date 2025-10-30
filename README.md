@@ -133,7 +133,7 @@ _Importante:_ a avaliação pode combinar fatores (idade, comorbidades); é impo
 
 
 ## Informações Adicionais Sobre as Páginas
-Todas as páginas que têm a função de gravar ou processar qualquer informação que vai para a base de dados, estão 
+Todas as páginas que têm a função de gravar ou processar qualquer informação que vai para a base de dados, estão localizados na pasta `controller` e todas as páginas de visualização, estão localizados na pasta `public` com excepção da página *index.php*.
 
 
 
