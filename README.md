@@ -3,11 +3,14 @@
 Sistema hospitalar com a finalidade de facilitar ao máximo o processo de triagem de cada paciente antes ou de chegar à unidade hospitalar
 Este módulo de pré-triagem médica permite selecionar grupos de ocorrência e sinais clínicos associados, com suporte a pesquisa dinâmica, filtragem inteligente e integração visual entre sintomas e grupos. O objetivo é tornar o processo de triagem mais rápido, intuitivo e confiável.
 
-### Linguagens e Versões
+### Tecnologias Usadas e Versões
 Sistema WEB feito com as linguagens:
 - **PHP** - _(linguagem principal - lógica do sistema)_. Versão: ``8.2.12 (cli) (built: Oct 24 2023 21:15:15) (ZTS Visual C++ 2019 x64)``;
 - **CSS** - Estilo e aparência da visualização das páginas;
 - **JavaScript** - Funcionalidades interativas;
+- **XAMPP/PHPMyAdmin** - Uso do gestor de banco de dados com a linguagem **SQL**;
+- **Composer** - uso do recurso **PHPSpreadsheet** para gerar ficheirso com a extensão `.xlsx` exportar ficheiros para a ferramenta `Excel`;
+- **Visual Studio Code** - usado para a criação dos códigos `PHP`, `CSS`, `JavaScript` e toda a lógica necessária para o funcionamento do projecto. Compilação execução dos códigos.
 
 ## Modelo de dados (tabelas)
 Parte responsável pela base de dados. Tabelas:
