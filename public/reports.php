@@ -2,7 +2,7 @@
 // resumo_pretriagem.php
 // Ajusta o caminho para o teu ficheiro de conexão que expõe $pdo (PDO)
 require_once __DIR__ . '/../config/conexao.php';
-require 'auth.php';
+require '../controller/auth.php';
 
 // Recebe filtros via GET (para permitir links partilháveis)
 $start_date = isset($_GET['start_date']) && $_GET['start_date'] !== '' ? $_GET['start_date'] : null;
@@ -24,7 +24,7 @@ $known_status = ['Em Espera', 'Em Andamento', 'Atendido'];
 
 // --- 1) Consulta de resumo: contagem por status no intervalo
 try {
-    $sql = "SELECT status, COUNT(*) AS cnt
+    $sql = "SELECT situacao, COUNT(*) AS cnt
             FROM tb_pre_triagem
             WHERE data_de_registo BETWEEN :start AND :end
             GROUP BY situacao";
@@ -38,7 +38,7 @@ try {
     $counts['Total'] = 0;
 
     foreach ($rows as $r) {
-        $s = $r['status'];
+        $s = $r['situacao'];
         $c = (int)$r['cnt'];
         if (!array_key_exists($s, $counts)) {
             // se houver status inesperado, adiciona dinamicamente
@@ -61,11 +61,11 @@ try {
     $where = "WHERE data_de_registo BETWEEN :start AND :end";
 
     if ($status !== 'todos') {
-        $where .= " AND status = :status";
-        $params[':status'] = $status;
+        $where .= " AND situacao = :situacao";
+        $params[':situacao'] = $status;
     }
 
-    $sql_list = "SELECT cod_pre_triagem, nome_paciente, situacao, data_de_registo
+    $sql_list = "SELECT cod_pre_triagem, nome_paciente, situacao, classificacao_de_risco as classificacao, data_de_registo
                  FROM tb_pre_triagem
                  $where
                  ORDER BY data_de_registo DESC
@@ -87,6 +87,8 @@ try {
     <title>Resumo Pré-triagem — Filine</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="icon" href="../public/favicon.ico" type="image/x-icon">
     <style>
         .card .value {
             font-size: 1.8rem;
@@ -104,7 +106,7 @@ try {
 
     <?php if (file_exists(__DIR__ . '/../public/header.php')) include '../public/header.php'; ?>
     <div class="container my-4">
-        <h3>Resumo de Pré-triagem</h3>
+        <h3>Resumo</h3>
 
         <!-- Formulário de filtros -->
         <form class="row g-2 align-items-end" method="get" action="">
@@ -117,7 +119,7 @@ try {
                 <input type="date" name="end_date" class="form-control" value="<?php echo htmlspecialchars($end_date); ?>">
             </div>
             <div class="col-auto">
-                <label class="form-label">Status</label>
+                <label class="form-label">Estado</label>
                 <select name="situacao" class="form-select">
                     <option value="todos" <?php if ($status === 'todos') echo 'selected'; ?>>Todos</option>
                     <?php foreach ($known_status as $s): ?>
@@ -128,6 +130,17 @@ try {
             <div class="col-auto">
                 <button class="btn btn-primary">Aplicar</button>
                 <a class="btn btn-outline-secondary" href="reports.php">Reset</a>
+                <!-- botão Exportar -->
+                <a
+                    href="<?php echo htmlspecialchars('../functions/exportar_reports.php'
+                                . '?start_date=' . urlencode($start_date)
+                                . '&end_date=' . urlencode($end_date)
+                                . '&situacao=' . urlencode($status)); ?>"
+                    class="btn btn-success"
+                    title="Exportar para XLSX">
+                    <i class="fas fa-file-excel"></i> Exportar XLSX
+                </a>
+
             </div>
         </form>
 
@@ -181,7 +194,8 @@ try {
                             <tr>
                                 <th style="width:70px;">ID</th>
                                 <th>Nome</th>
-                                <th style="width:160px;">Status</th>
+                                <th style="width:160px;">Estado</th>
+                                <th style="width:160px;">Classificação</th>
                                 <th style="width:200px;">Data Registo</th>
                             </tr>
                         </thead>
@@ -196,6 +210,7 @@ try {
                                         <td><?php echo htmlspecialchars($row['cod_pre_triagem']); ?></td>
                                         <td><?php echo htmlspecialchars($row['nome_paciente']); ?></td>
                                         <td><?php echo htmlspecialchars($row['situacao']); ?></td>
+                                        <td><?php echo htmlspecialchars($row['classificacao']); ?></td>
                                         <td><?= date('d/m/Y - H:i:s', strtotime($row['data_de_registo'])) ?></td>
                                     </tr>
                                 <?php endforeach; ?>

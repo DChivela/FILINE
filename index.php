@@ -614,7 +614,7 @@ $enderecos = $stmt->fetchAll();
   </div>
 
   <footer>
-    <p>&copy; <?= date('Y') ?> Filine-ON. Todos os direitos reservados.</p>
+    <p>&copy; <?= date('Y') ?> FILINE-ON. Todos os direitos reservados.</p>
   </footer>
   <script src="functions/js/filter_ocorrencias.js"></script>
   <script src="functions/js/grupo_ocorrencias.js"></script>
